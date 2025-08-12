@@ -1,13 +1,13 @@
-# Makefile para compilación automatizada
+# Makefile para compilación automatizada en Linux
 
 # Configuración del compilador
-CXX := g++ # Usa el compilador g++
-CXXFLAGS := -Wall -Wextra -pedantic -std=c++11 # Opciones de compilación
+CXX := g++
+CXXFLAGS := -Wall -Wextra -pedantic -std=c++14  # Usando C++14 para std::make_unique
 
 # Archivos fuente y objetos
-SRCS := generador.cpp main.cpp # Persona.h es header-only ahora
+SRCS := generador.cpp main.cpp monitor.cpp
 OBJS := $(SRCS:.cpp=.o)
-EXEC := programa # Nombre del ejecutable final
+EXEC := programa
 
 # Objetivo principal: compilar el ejecutable
 all: $(EXEC)
@@ -17,19 +17,25 @@ $(EXEC): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
 # Reglas específicas para cada objeto con sus dependencias
-
-# generador.o depende de generador.cpp y sus headers
 generador.o: generador.cpp generador.h persona.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# main.o depende de main.cpp y sus headers
-main.o: main.cpp persona.h generador.h
+monitor.o: monitor.cpp monitor.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+main.o: main.cpp persona.h generador.h monitor.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Limpia archivos generados
 clean:
 	rm -f $(OBJS) $(EXEC)
 
+# Recompila todo desde cero
+rebuild: clean all
+
 # Ejecuta el programa después de compilar
 run: $(EXEC)
 	./$(EXEC)
+
+# Declara objetivos que no son archivos
+.PHONY: all clean rebuild run
