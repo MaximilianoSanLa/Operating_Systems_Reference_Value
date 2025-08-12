@@ -5,7 +5,7 @@ CXX := g++ # Usa el compilador g++
 CXXFLAGS := -Wall -Wextra -pedantic -std=c++11 # Opciones de compilación
 
 # Archivos fuente y objetos
-SRCS := generador.cpp main.cpp # Persona.h es header-only ahora
+SRCS := generador.cpp main.cpp monitor.cpp# Persona.h es header-only ahora
 OBJS := $(SRCS:.cpp=.o)
 EXEC := programa # Nombre del ejecutable final
 
