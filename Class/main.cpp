@@ -50,6 +50,8 @@ int main() {
         size_t tam = 0;
         int indice;
         std::string idBusqueda;
+
+        long memoria_inicio = monitor.obtener_memoria();
         
         switch(opcion) {
             case 0: { // Crear nuevo conjunto de datos
@@ -59,7 +61,6 @@ int main() {
                 
                 // Iniciar medición de tiempo y memoria para la operación actual
                 monitor.iniciar_tiempo();
-                long memoria_inicio = monitor.obtener_memoria();
 
                 if (n <= 0) {
                     std::cout << "Error: Debe generar al menos 1 persona\n";
