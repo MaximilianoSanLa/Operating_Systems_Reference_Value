@@ -74,7 +74,6 @@ int main() {
                 for(size_t i = 0; i < tam; ++i) {
                     std::cout << i << ". ";
                     (*personas)[i].mostrarResumen();
-                    std::cout << "\n";
                 }
                 
                 double tiempo_mostrar = monitor.detener_tiempo();
@@ -94,6 +93,7 @@ int main() {
                 if(std::cin >> indice) {
                     if(indice >= 0 && static_cast<size_t>(indice) < tam) {
                         (*personas)[indice].mostrar();
+                        std::cout << "\n " <<(*personas)[indice].fechaNacimiento<<"\n";
                     } else {
                         std::cout << "Índice fuera de rango!\n";
                     }
