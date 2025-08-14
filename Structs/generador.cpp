@@ -1,4 +1,5 @@
 #include "generador.h"
+#include "task.h"
 #include <cstdlib>   // rand(), srand()
 #include <ctime>     // time()
 #include <random>    // Generadores aleatorios modernos
@@ -62,6 +63,7 @@ double randomDouble(double min, double max) {
 
 Persona generarPersona() {
     Persona p; // Crea una instancia de la estructura Persona
+    Task task; // Crea un task para poder usar la función de edad
     
     // Decide aleatoriamente si es hombre o mujer
     bool esHombre = rand() % 2;
@@ -81,6 +83,8 @@ Persona generarPersona() {
     p.ciudadNacimiento = ciudadesColombia[rand() % ciudadesColombia.size()];
     // Fecha aleatoria
     p.fechaNacimiento = generarFechaNacimiento();
+
+    p.edad = task.obtener_edad(p.fechaNacimiento);
     
     // --- Generación de datos económicos realistas ---
     // Ingresos entre 10 millones y 500 millones COP

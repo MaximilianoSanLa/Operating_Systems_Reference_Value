@@ -13,6 +13,7 @@ struct Persona {
     std::string id;               // Identificador único
     std::string ciudadNacimiento; // Ciudad de nacimiento en Colombia
     std::string fechaNacimiento;  // Fecha en formato DD/MM/AAAA
+    int edad;
     
     // Datos fiscales y económicos
     double ingresosAnuales;       // Ingresos anuales en pesos colombianos
@@ -36,6 +37,7 @@ inline void Persona::mostrar() const {
     std::cout << "   - Patrimonio: $" << patrimonio << "\n";
     std::cout << "   - Deudas: $" << deudas << "\n";
     std::cout << "   - Declarante de renta: " << (declaranteRenta ? "Sí" : "No") << "\n";
+    std::cout << "   - Edad: " << edad << "\n\n";
 }
 
 inline void Persona::mostrarResumen() const {

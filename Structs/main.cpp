@@ -4,6 +4,7 @@
 #include <memory> // Para std::unique_ptr y std::make_unique
 #include "persona.h"
 #include "generador.h"
+#include "task.h"
 #include "monitor.h" // Nuevo header para monitoreo
 
 void mostrarMenu() {
@@ -14,7 +15,9 @@ void mostrarMenu() {
     std::cout << "\n3. Buscar persona por ID";
     std::cout << "\n4. Mostrar estadísticas de rendimiento";
     std::cout << "\n5. Exportar estadísticas a CSV";
-    std::cout << "\n6. Salir";
+    std::cout << "\n6. Obtener persona mas longeva en el pais";
+    std::cout << "\n7. Obtener persona mas longeva por ciudad";
+    std::cout << "\n8. Salir";
     std::cout << "\nSeleccione una opción: ";
 }
 
@@ -24,6 +27,7 @@ int main() {
     // Usar unique_ptr para manejar la colección de personas
     std::unique_ptr<std::vector<Persona>> personas = nullptr;
     Monitor monitor;
+    Task task;
     
     int opcion;
     do {
@@ -93,7 +97,6 @@ int main() {
                 if(std::cin >> indice) {
                     if(indice >= 0 && static_cast<size_t>(indice) < tam) {
                         (*personas)[indice].mostrar();
-                        std::cout << "\n " <<(*personas)[indice].fechaNacimiento<<"\n";
                     } else {
                         std::cout << "Índice fuera de rango!\n";
                     }
@@ -139,6 +142,25 @@ int main() {
                 break;
                 
             case 6:
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
+
+                tam = personas->size();
+                std::cout << "\n=== RESUMEN DE PERSONAS (" << tam << ") ===\n";
+                for(size_t i = 0; i < tam; ++i) {
+                    std::cout << i << ". ";
+                    (*personas)[i].mostrarResumen();
+                }
+
+                break;
+
+            case 7:
+                std::cout << "Saliendo...\n";
+                break;
+
+            case 8:
                 std::cout << "Saliendo...\n";
                 break;
                 
