@@ -59,6 +59,7 @@ int main() {
     Task task;
     
     int opcion;
+    int aux;
     do {
         mostrarMenu();
         std::cin >> opcion;
@@ -70,7 +71,15 @@ int main() {
         // Iniciar medición de tiempo y memoria para esta operación
         long memoria_inicio;
         
+        if (opcion >= 6 && opcion <= 9) {
+            std::cout << "\n1. Pasar por valor";
+            std::cout << "\n2. Pasar por referencia";
+            std::cout << "\nSeleccione una opción: ";
+            std::cin >> aux;
+        }
+
         switch(opcion) {
+
             case 0: {
                 int n;
                 std::cout << "\nIngrese el número de personas a generar: ";
@@ -104,6 +113,9 @@ int main() {
                     break;
                 }
                 
+                monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
+                
                 tam = personas->size();
                 std::cout << "\n=== RESUMEN DE PERSONAS (" << tam << ") ===\n";
                 for(size_t i = 0; i < tam; ++i) {
@@ -123,6 +135,9 @@ int main() {
                     break;
                 }
                 
+                monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
+
                 tam = personas->size();
                 std::cout << "\nIngrese el índice (0-" << tam-1 << "): ";
                 if(std::cin >> indice) {
@@ -151,6 +166,9 @@ int main() {
                 
                 std::cout << "\nIngrese el ID a buscar: ";
                 std::cin >> idBusqueda;
+
+                monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
                 
                 if(const Persona* encontrada = buscarPorID(*personas, idBusqueda)) {
                     encontrada->mostrar();
@@ -179,7 +197,17 @@ int main() {
                     break;
                 }
 
-                personas = task.buscar_edad_valor(std::move(personas), 0);
+                monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
+
+
+                if(aux == 1){
+                    personas = task.buscar_edad_valor(std::move(personas), 0);
+                }
+                else {
+                    task.buscar_edad_referencia(personas, 0);
+                }
+                
 
                 double tiempo_longevo = monitor.detener_tiempo();
                 long memoria_longevo = monitor.obtener_memoria() - memoria_inicio;
@@ -201,6 +229,9 @@ int main() {
                 mostrarCiudades();
                 std::cin >> ciudad;
 
+                monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
+
                 personas = task.buscar_edad_valor(std::move(personas), ciudad);
 
                 double tiempo_longevo_ciudad = monitor.detener_tiempo();
@@ -218,6 +249,9 @@ int main() {
                     std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
                     break;
                 }
+
+                monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
 
                 personas = task.buscar_patrimonio_valor(std::move(personas), 0);
 
@@ -240,6 +274,9 @@ int main() {
 
                 mostrarCiudades();
                 std::cin >> ciudad;
+
+                monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
 
                 personas = task.buscar_patrimonio_valor(std::move(personas), ciudad);
 
