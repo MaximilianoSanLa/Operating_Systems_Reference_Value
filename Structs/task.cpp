@@ -36,24 +36,74 @@ int Task::obtener_edad(std::string fecha_nacimiento){
     
 }
 
-std::unique_ptr<std::vector<Persona>> Task::buscar_edad_valor(std::unique_ptr<std::vector<Persona>> personas){
+std::unique_ptr<std::vector<Persona>> Task::buscar_edad_valor(std::unique_ptr<std::vector<Persona>> personas, int opcion){
     std::vector<Persona> personas_edad;
 
     size_t tam = personas->size();
     int max_edad = (*personas)[0].edad;
+    std::string ciudad;
+
+
+    switch (opcion) {
+        case 0: ciudad = "todos"; break; 
+        case 1:  ciudad = "Bogotá"; break;
+        case 2:  ciudad = "Medellín"; break;
+        case 3:  ciudad = "Cali"; break;
+        case 4:  ciudad = "Barranquilla"; break;
+        case 5:  ciudad = "Cartagena"; break;
+        case 6:  ciudad = "Bucaramanga"; break;
+        case 7:  ciudad = "Pereira"; break;
+        case 8:  ciudad = "Santa Marta"; break;
+        case 9:  ciudad = "Cúcuta"; break;
+        case 10: ciudad = "Ibagué"; break;
+        case 11: ciudad = "Manizales"; break;
+        case 12: ciudad = "Pasto"; break;
+        case 13: ciudad = "Neiva"; break;
+        case 14: ciudad = "Villavicencio"; break;
+        case 15: ciudad = "Armenia"; break;
+        case 16: ciudad = "Sincelejo"; break;
+        case 17: ciudad = "Valledupar"; break;
+        case 18: ciudad = "Montería"; break;
+        case 19: ciudad = "Popayán"; break;
+        case 20: ciudad = "Tunja"; break;
+        default: 
+            std::cout<<"numero invalido"<<"\n";
+            return personas;
+    }
+
     
+    if (ciudad == "todos"){
+        for(size_t i = 0; i < tam; ++i){
+            if(max_edad == (*personas)[i].edad){
+                personas_edad.push_back((*personas)[i]);
+            }
 
-    for(size_t i = 0; i < tam; ++i){
-        if(max_edad == (*personas)[i].edad){
-            personas_edad.push_back((*personas)[i]);
-        }
-
-        if(max_edad < (*personas)[i].edad){
-            personas_edad.clear();
-            personas_edad.push_back((*personas)[i]);
-            max_edad = (*personas)[i].edad;
+            if(max_edad < (*personas)[i].edad){
+                personas_edad.clear();
+                personas_edad.push_back((*personas)[i]);
+                max_edad = (*personas)[i].edad;
+            }
         }
     }
+    else {
+        for(size_t i = 0; i < tam; ++i){
+
+            if(ciudad == (*personas)[i].ciudadNacimiento){
+                if(max_edad == (*personas)[i].edad){
+                    personas_edad.push_back((*personas)[i]);
+                }
+
+                if(max_edad < (*personas)[i].edad){
+                    personas_edad.clear();
+                    personas_edad.push_back((*personas)[i]);
+                    max_edad = (*personas)[i].edad;
+                }
+            }
+            
+        }
+    }
+
+    
 
     size_t tam_edad = personas_edad.size();
 

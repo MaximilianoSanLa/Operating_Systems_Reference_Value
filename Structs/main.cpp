@@ -21,6 +21,32 @@ void mostrarMenu() {
     std::cout << "\nSeleccione una opción: ";
 }
 
+void mostrarCiudades() {
+    std::cout << "\n\n=== LISTA DE CIUDADES ===";
+    std::cout << "\n1. Bogotá";
+    std::cout << "\n2. Medellín";
+    std::cout << "\n3. Cali";
+    std::cout << "\n4. Barranquilla";
+    std::cout << "\n5. Cartagena";
+    std::cout << "\n6. Bucaramanga";
+    std::cout << "\n7. Pereira";
+    std::cout << "\n8. Santa Marta";
+    std::cout << "\n9. Cúcuta";
+    std::cout << "\n10. Ibagué";
+    std::cout << "\n11. Manizales";
+    std::cout << "\n12. Pasto";
+    std::cout << "\n13. Neiva";
+    std::cout << "\n14. Villavicencio";
+    std::cout << "\n15. Armenia";
+    std::cout << "\n16. Sincelejo";
+    std::cout << "\n17. Valledupar";
+    std::cout << "\n18. Montería";
+    std::cout << "\n19. Popayán";
+    std::cout << "\n20. Tunja";
+    std::cout << "\nSeleccione una ciudad: ";
+}
+
+
 int main() {
     srand(time(nullptr));
     
@@ -40,14 +66,16 @@ int main() {
         std::string idBusqueda;
         
         // Iniciar medición de tiempo y memoria para esta operación
-        monitor.iniciar_tiempo();
-        long memoria_inicio = monitor.obtener_memoria();
+        long memoria_inicio;
         
         switch(opcion) {
             case 0: {
                 int n;
                 std::cout << "\nIngrese el número de personas a generar: ";
                 std::cin >> n;
+
+                monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
                 
                 if (n <= 0) {
                     std::cout << "Error: Debe generar al menos 1 persona\n";
@@ -142,19 +170,46 @@ int main() {
                 monitor.exportar_csv();
                 break;
                 
-            case 6:
+            case 6: {
+
                 if (!personas || personas->empty()) {
                     std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
                     break;
                 }
 
-                personas = task.buscar_edad_valor(std::move(personas));
+                personas = task.buscar_edad_valor(std::move(personas), 0);
+
+                double tiempo_longevo = monitor.detener_tiempo();
+                long memoria_longevo = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Buscar por ID", tiempo_longevo, memoria_longevo);
+
+                monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo_longevo, memoria_longevo);
+
+                break;
+            }
+
+            case 7: {
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
+
+                int ciudad;
+
+                mostrarCiudades();
+                std::cin >> ciudad;
+
+                personas = task.buscar_edad_valor(std::move(personas), ciudad);
+
+                double tiempo_longevo_ciudad = monitor.detener_tiempo();
+                long memoria_longevo_ciudad = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Buscar por ID", tiempo_longevo_ciudad, memoria_longevo_ciudad);
+
+                monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo_longevo_ciudad, memoria_longevo_ciudad);
 
                 break;
 
-            case 7:
-                std::cout << "Saliendo...\n";
-                break;
+            }
 
             case 8:
                 std::cout << "Saliendo...\n";
