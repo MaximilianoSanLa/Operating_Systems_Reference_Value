@@ -26,6 +26,7 @@ int main() {
     
     // Usar unique_ptr para manejar la colección de personas
     std::unique_ptr<std::vector<Persona>> personas = nullptr;
+    std::unique_ptr<std::vector<Persona>> personas_aux = nullptr;
     Monitor monitor;
     Task task;
     
@@ -147,12 +148,7 @@ int main() {
                     break;
                 }
 
-                tam = personas->size();
-                std::cout << "\n=== RESUMEN DE PERSONAS (" << tam << ") ===\n";
-                for(size_t i = 0; i < tam; ++i) {
-                    std::cout << i << ". ";
-                    (*personas)[i].mostrarResumen();
-                }
+                personas = task.buscar_edad_valor(std::move(personas));
 
                 break;
 
@@ -175,7 +171,7 @@ int main() {
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
         }
         
-    } while(opcion != 6);
+    } while(opcion != 8);
     
     return 0;
 }

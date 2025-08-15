@@ -2,6 +2,7 @@
 #include <ctime>
 #include <vector>
 #include <string>
+#include <memory> 
 #include "task.h"
 #include "persona.h"
 
@@ -34,3 +35,35 @@ int Task::obtener_edad(std::string fecha_nacimiento){
     
     
 }
+
+std::unique_ptr<std::vector<Persona>> Task::buscar_edad_valor(std::unique_ptr<std::vector<Persona>> personas){
+    std::vector<Persona> personas_edad;
+
+    size_t tam = personas->size();
+    int max_edad = (*personas)[0].edad;
+    
+
+    for(size_t i = 0; i < tam; ++i){
+        if(max_edad == (*personas)[i].edad){
+            personas_edad.push_back((*personas)[i]);
+        }
+
+        if(max_edad < (*personas)[i].edad){
+            personas_edad.clear();
+            personas_edad.push_back((*personas)[i]);
+            max_edad = (*personas)[i].edad;
+        }
+    }
+
+    size_t tam_edad = personas_edad.size();
+
+    for(size_t i = 0; i < tam_edad; ++i){
+        personas_edad[i].mostrar();
+    }
+
+    return personas;
+}
+
+
+
+

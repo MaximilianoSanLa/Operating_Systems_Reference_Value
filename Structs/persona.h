@@ -43,7 +43,7 @@ inline void Persona::mostrar() const {
 inline void Persona::mostrarResumen() const {
     std::cout << "[" << id << "] " << nombre << " " << apellido
               << " | " << ciudadNacimiento 
-              << " | $" << std::fixed << std::setprecision(2) << ingresosAnuales;
+              << " | $" << std::fixed << std::setprecision(2) << ingresosAnuales << "\n";
 }
 
 #endif // PERSONA_H
