@@ -17,7 +17,9 @@ void mostrarMenu() {
     std::cout << "\n5. Exportar estadísticas a CSV";
     std::cout << "\n6. Obtener persona mas longeva en el pais";
     std::cout << "\n7. Obtener persona mas longeva por ciudad";
-    std::cout << "\n8. Salir";
+    std::cout << "\n8. Obtener persona con mayor patrimonio en el pais";
+    std::cout << "\n9. Obtener persona con mayor patrimonio por ciudad";
+    std::cout << "\n10. Salir";
     std::cout << "\nSeleccione una opción: ";
 }
 
@@ -211,9 +213,50 @@ int main() {
 
             }
 
-            case 8:
+            case 8: {
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
+
+                personas = task.buscar_patrimonio_valor(std::move(personas), 0);
+
+                double tiempo_patrimonio = monitor.detener_tiempo();
+                long memoria_patrimonio = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Buscar por ID", tiempo_patrimonio, memoria_patrimonio);
+
+                monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo_patrimonio, memoria_patrimonio);
+
+                break;
+            }
+
+            case 9: {
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
+
+                int ciudad;
+
+                mostrarCiudades();
+                std::cin >> ciudad;
+
+                personas = task.buscar_patrimonio_valor(std::move(personas), ciudad);
+
+                double tiempo_longevo_ciudad = monitor.detener_tiempo();
+                long memoria_longevo_ciudad = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Buscar por ID", tiempo_longevo_ciudad, memoria_longevo_ciudad);
+
+                monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo_longevo_ciudad, memoria_longevo_ciudad);
+
+                break;
+            }
+
+            case 10: {
                 std::cout << "Saliendo...\n";
                 break;
+            }
+                
                 
             default:
                 std::cout << "Opción inválida!\n";
@@ -226,7 +269,7 @@ int main() {
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
         }
         
-    } while(opcion != 8);
+    } while(opcion != 10);
     
     return 0;
 }

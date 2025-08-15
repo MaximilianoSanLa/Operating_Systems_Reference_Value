@@ -8,6 +8,7 @@ class Task{
     public:
         int obtener_edad(std::string fecha_nacimiento);
         std::unique_ptr<std::vector<Persona>> buscar_edad_valor(std::unique_ptr<std::vector<Persona>> personas, int opcion);
+        std::unique_ptr<std::vector<Persona>> buscar_patrimonio_valor(std::unique_ptr<std::vector<Persona>> personas, int opcion);
 
 };
 
