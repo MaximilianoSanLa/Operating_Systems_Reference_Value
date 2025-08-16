@@ -23,6 +23,8 @@ private:
     double patrimonio;            // Patrimonio total (activos)
     double deudas;                // Deudas totales (pasivos)
     bool declaranteRenta;         // Si es declarante de renta
+    char grupo;
+    int edad;
 
 public:
     /**
@@ -34,7 +36,7 @@ public:
      */
     Persona(std::string nom, std::string ape, std::string id, 
             std::string ciudad, std::string fecha, double ingresos, 
-            double patri, double deud, bool declara);
+            double patri, double deud, bool declara,int edad, char grupo);
     
     // Métodos de acceso (getters) - Implementados inline para eficiencia
     std::string getNombre() const { return nombre; }
@@ -64,6 +66,9 @@ public:
      * PARA QUÉ: Visualización eficiente en colecciones grandes.
      */
     void mostrarResumen() const;
+    int getEdad() const { return edad; }
+
+
 };
 
 #endif // PERSONA_H

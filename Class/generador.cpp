@@ -71,6 +71,45 @@ double randomDouble(double min, double max) {
     return distribution(generator);
 }
 
+
+int retornarEdad(const std::string& fecha) {
+    // fecha format: "dd/mm/yyyy"
+    int dia, mes, anio;
+    char sep; // for the '/' characters
+
+    std::istringstream iss(fecha);
+    iss >> dia >> sep >> mes >> sep >> anio;
+
+    // Get today's date
+    std::time_t t = std::time(nullptr);
+    std::tm* now = std::localtime(&t);
+
+    int edad = now->tm_year + 1900 - anio;
+
+    // Adjust if birthday hasn't occurred yet this year
+    if ((mes > (now->tm_mon + 1)) || 
+        (mes == (now->tm_mon + 1) && dia > now->tm_mday)) {
+        edad--;
+    }
+
+    return edad;
+}
+
+
+char retornarGrupo(const std::string& documento) {
+    // tomar los dos últimos caracteres
+    if (documento.size() < 2) return 'X'; // error, documento demasiado corto
+
+    int ultimosDos = std::stoi(documento.substr(documento.size() - 2));
+
+    if (ultimosDos >= 0 && ultimosDos <= 39) return 'A';
+    if (ultimosDos >= 40 && ultimosDos <= 79) return 'B';
+    if (ultimosDos >= 80 && ultimosDos <= 99) return 'C';
+
+    return 'X'; // por seguridad, nunca debería llegar aquí
+}
+
+
 /**
  * Implementación de generarPersona.
  * 
@@ -78,6 +117,7 @@ double randomDouble(double min, double max) {
  * CÓMO: Seleccionando aleatoriamente de las bases de datos y generando números.
  * PARA QUÉ: Generar datos de prueba.
  */
+
 Persona generarPersona() {
     // Decide si es hombre o mujer
     bool esHombre = rand() % 2;
@@ -96,14 +136,15 @@ Persona generarPersona() {
     std::string id = generarID();
     std::string ciudad = ciudadesColombia[rand() % ciudadesColombia.size()];
     std::string fecha = generarFechaNacimiento();
+    int edad = retornarEdad(fecha);
     
     // Genera datos financieros realistas
     double ingresos = randomDouble(10000000, 500000000);   // 10M a 500M COP
     double patrimonio = randomDouble(0, 2000000000);       // 0 a 2,000M COP
     double deudas = randomDouble(0, patrimonio * 0.7);     // Deudas hasta el 70% del patrimonio
     bool declarante = (ingresos > 50000000) && (rand() % 100 > 30); // Probabilidad 70% si ingresos > 50M
-    
-    return Persona(nombre, apellido, id, ciudad, fecha, ingresos, patrimonio, deudas, declarante);
+    char grupo=retornarGrupo(id);
+    return Persona(nombre, apellido, id, ciudad, fecha, ingresos, patrimonio, deudas, declarante,edad,grupo);
 }
 
 /**

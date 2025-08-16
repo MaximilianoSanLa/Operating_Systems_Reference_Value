@@ -10,7 +10,7 @@
  */
 Persona::Persona(std::string nom, std::string ape, std::string id, 
                  std::string ciudad, std::string fecha, double ingresos, 
-                 double patri, double deud, bool declara)
+                 double patri, double deud, bool declara, int edad,char grupo)
     : nombre(std::move(nom)), 
       apellido(std::move(ape)), 
       id(std::move(id)), 
@@ -19,7 +19,9 @@ Persona::Persona(std::string nom, std::string ape, std::string id,
       ingresosAnuales(ingresos), 
       patrimonio(patri),
       deudas(deud), 
-      declaranteRenta(declara) {}
+      declaranteRenta(declara),
+      edad(edad),
+      grupo(grupo){}
 
 /**
  * Implementación de mostrar.
@@ -33,12 +35,14 @@ void Persona::mostrar() const {
     std::cout << "[" << id << "] Nombre: " << nombre << " " << apellido << "\n";
     std::cout << "   - Ciudad de nacimiento: " << ciudadNacimiento << "\n";
     std::cout << "   - Fecha de nacimiento: " << fechaNacimiento << "\n\n";
+    std::cout << "   - Edad: " << edad << "\n";    
     std::cout << std::fixed << std::setprecision(2); // Formato de números
     std::cout << "   - Ingresos anuales: $" << ingresosAnuales << "\n";
     std::cout << "   - Patrimonio: $" << patrimonio << "\n";
     std::cout << "   - Deudas: $" << deudas << "\n";
     std::cout << "   - Declarante de renta: " << (declaranteRenta ? "Sí" : "No") << "\n";
 }
+
 
 /**
  * Implementación de mostrarResumen.
