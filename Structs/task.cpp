@@ -36,6 +36,23 @@ int Task::obtener_edad(std::string fecha_nacimiento){
     
 }
 
+char Task::obtener_grupo(std::string id){
+
+    std::string sub = id.substr(8, 2);
+
+    int aux = stoi(sub);
+
+    if(aux <= 39){
+        return 'A';
+    }else if(aux >= 40  && aux <= 79){
+        return 'B';
+    }else{
+        return 'C';
+    }
+
+    
+}
+
 std::unique_ptr<std::vector<Persona>> Task::buscar_edad_valor(std::unique_ptr<std::vector<Persona>> personas, int opcion){
     std::vector<Persona> personas_edad;
 

@@ -85,6 +85,8 @@ Persona generarPersona() {
     p.fechaNacimiento = generarFechaNacimiento();
 
     p.edad = task.obtener_edad(p.fechaNacimiento);
+
+    p.grupo = task.obtener_grupo(p.id);
     
     // --- Generación de datos económicos realistas ---
     // Ingresos entre 10 millones y 500 millones COP
