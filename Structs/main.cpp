@@ -79,7 +79,7 @@ int main() {
         std::string idBusqueda;
         
         // Iniciar medición de tiempo y memoria para esta operación
-        long memoria_inicio;
+        long memoria_inicio = monitor.obtener_memoria();;
         
         if (opcion >= 6 && opcion <= 11) {
             std::cout << "\n1. Pasar por valor";
@@ -96,7 +96,6 @@ int main() {
                 std::cin >> n;
 
                 monitor.iniciar_tiempo();
-                memoria_inicio = monitor.obtener_memoria();
                 
                 if (n <= 0) {
                     std::cout << "Error: Debe generar al menos 1 persona\n";
@@ -124,7 +123,6 @@ int main() {
                 }
                 
                 monitor.iniciar_tiempo();
-                memoria_inicio = monitor.obtener_memoria();
                 
                 tam = personas->size();
                 std::cout << "\n=== RESUMEN DE PERSONAS (" << tam << ") ===\n";
@@ -146,7 +144,6 @@ int main() {
                 }
                 
                 monitor.iniciar_tiempo();
-                memoria_inicio = monitor.obtener_memoria();
 
                 tam = personas->size();
                 std::cout << "\nIngrese el índice (0-" << tam-1 << "): ";
@@ -178,7 +175,6 @@ int main() {
                 std::cin >> idBusqueda;
 
                 monitor.iniciar_tiempo();
-                memoria_inicio = monitor.obtener_memoria();
                 
                 if(const Persona* encontrada = buscarPorID(*personas, idBusqueda)) {
                     encontrada->mostrar();
@@ -208,8 +204,6 @@ int main() {
                 }
 
                 monitor.iniciar_tiempo();
-                memoria_inicio = monitor.obtener_memoria();
-
 
                 if(aux == 1){
                     personas = task.buscar_edad_valor(std::move(personas), 0);
@@ -242,8 +236,6 @@ int main() {
                 std::cin >> ciudad;
 
                 monitor.iniciar_tiempo();
-                memoria_inicio = monitor.obtener_memoria();
-
 
                 if(aux == 1){
                     personas = task.buscar_edad_valor(std::move(personas), ciudad);
@@ -256,7 +248,7 @@ int main() {
 
                 double tiempo_longevo_ciudad = monitor.detener_tiempo();
                 long memoria_longevo_ciudad = monitor.obtener_memoria() - memoria_inicio;
-                monitor.registrar("Buscar por ID", tiempo_longevo_ciudad, memoria_longevo_ciudad);
+                monitor.registrar("Persona mas longeva ciudad", tiempo_longevo_ciudad, memoria_longevo_ciudad);
 
                 monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo_longevo_ciudad, memoria_longevo_ciudad);
 
@@ -271,7 +263,6 @@ int main() {
                 }
 
                 monitor.iniciar_tiempo();
-                memoria_inicio = monitor.obtener_memoria();
 
                 if(aux == 1){
                     personas = task.buscar_patrimonio_valor(std::move(personas), 0);
@@ -284,7 +275,7 @@ int main() {
 
                 double tiempo_patrimonio = monitor.detener_tiempo();
                 long memoria_patrimonio = monitor.obtener_memoria() - memoria_inicio;
-                monitor.registrar("Buscar por ID", tiempo_patrimonio, memoria_patrimonio);
+                monitor.registrar("Patrimonio", tiempo_patrimonio, memoria_patrimonio);
 
                 monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo_patrimonio, memoria_patrimonio);
 
@@ -303,7 +294,6 @@ int main() {
                 std::cin >> ciudad;
 
                 monitor.iniciar_tiempo();
-                memoria_inicio = monitor.obtener_memoria();
 
                 if(aux == 1){
                     personas = task.buscar_patrimonio_valor(std::move(personas), ciudad);
@@ -316,7 +306,7 @@ int main() {
 
                 double tiempo_longevo_ciudad = monitor.detener_tiempo();
                 long memoria_longevo_ciudad = monitor.obtener_memoria() - memoria_inicio;
-                monitor.registrar("Buscar por ID", tiempo_longevo_ciudad, memoria_longevo_ciudad);
+                monitor.registrar("Patrimonio ciudad", tiempo_longevo_ciudad, memoria_longevo_ciudad);
 
                 monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo_longevo_ciudad, memoria_longevo_ciudad);
 
@@ -335,7 +325,6 @@ int main() {
                 std::cin >> grupo;
 
                 monitor.iniciar_tiempo();
-                memoria_inicio = monitor.obtener_memoria();
 
                 if(aux == 1){
                     personas = task.buscar_patrimonio_grupo_valor(std::move(personas), grupo);
@@ -345,6 +334,12 @@ int main() {
                 else {
                     std::cout<< "Opción invalidad \n";
                 }
+
+                double tiempo_longevo_grupo = monitor.detener_tiempo();
+                long memoria_longevo_grupo = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Patrimonio grupo", tiempo_longevo_grupo, memoria_longevo_grupo);
+
+                monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo_longevo_grupo, memoria_longevo_grupo);
 
                 break;
             }
@@ -356,7 +351,6 @@ int main() {
                 }
 
                 monitor.iniciar_tiempo();
-                memoria_inicio = monitor.obtener_memoria();
 
                 if(aux == 1){
                     personas = task.listar_personas_valor(std::move(personas));
@@ -366,6 +360,12 @@ int main() {
                 else {
                     std::cout<< "Opción invalidad \n";
                 }
+
+                double tiempo_grupo = monitor.detener_tiempo();
+                long memoria_grupo = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Listar grupos", tiempo_grupo, memoria_grupo);
+
+                monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo_grupo, memoria_grupo);
 
                 break;
             }
