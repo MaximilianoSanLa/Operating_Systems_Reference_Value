@@ -5,7 +5,7 @@ CXX := g++
 CXXFLAGS := -Wall -Wextra -pedantic -std=c++14  # Usando C++14 para std::make_unique
 
 # Archivos fuente y objetos
-SRCS := generador.cpp main.cpp monitor.cpp task.cpp# Persona.h es header-only ahora
+SRCS := generador.cpp main.cpp monitor.cpp # Persona.h es header-only ahora
 OBJS := $(SRCS:.cpp=.o)
 EXEC := programa
 
@@ -23,8 +23,6 @@ generador.o: generador.cpp generador.h persona.h task.h
 monitor.o: monitor.cpp monitor.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-task.o: task.cpp task.h
-	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 main.o: main.cpp persona.h generador.h monitor.h task.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@

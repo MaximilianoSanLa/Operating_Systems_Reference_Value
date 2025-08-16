@@ -63,7 +63,7 @@ double randomDouble(double min, double max) {
 
 Persona generarPersona() {
     Persona p; // Crea una instancia de la estructura Persona
-    Task task; // Crea un task para poder usar la función de edad
+
     
     // Decide aleatoriamente si es hombre o mujer
     bool esHombre = rand() % 2;
@@ -84,9 +84,9 @@ Persona generarPersona() {
     // Fecha aleatoria
     p.fechaNacimiento = generarFechaNacimiento();
 
-    p.edad = task.obtener_edad(p.fechaNacimiento);
+    p.edad = obtener_edad(p.fechaNacimiento);
 
-    p.grupo = task.obtener_grupo(p.id);
+    p.grupo = obtener_grupo(p.id);
     
     // --- Generación de datos económicos realistas ---
     // Ingresos entre 10 millones y 500 millones COP
