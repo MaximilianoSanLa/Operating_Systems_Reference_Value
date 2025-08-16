@@ -62,36 +62,15 @@ inline std::unique_ptr<std::vector<Persona>> buscar_edad_valor(std::unique_ptr<s
     int max_edad = (*personas)[0].edad;
     std::string ciudad;
 
+    std::string ciudades[21]={"todos", "Bogotá","Medellín","Cali","Barranquilla","Cartagena","Bucaramanga","Pereira",
+        "Santa Marta","Cúcuta","Ibagué","Manizales","Pasto","Neiva","Villavicencio","Armenia","Sincelejo","Valledupar",
+        "Montería", "Popayán", "Tunja"
+    };
 
-    switch (opcion) {
-        case 0: ciudad = "todos"; break; 
-        case 1:  ciudad = "Bogotá"; break;
-        case 2:  ciudad = "Medellín"; break;
-        case 3:  ciudad = "Cali"; break;
-        case 4:  ciudad = "Barranquilla"; break;
-        case 5:  ciudad = "Cartagena"; break;
-        case 6:  ciudad = "Bucaramanga"; break;
-        case 7:  ciudad = "Pereira"; break;
-        case 8:  ciudad = "Santa Marta"; break;
-        case 9:  ciudad = "Cúcuta"; break;
-        case 10: ciudad = "Ibagué"; break;
-        case 11: ciudad = "Manizales"; break;
-        case 12: ciudad = "Pasto"; break;
-        case 13: ciudad = "Neiva"; break;
-        case 14: ciudad = "Villavicencio"; break;
-        case 15: ciudad = "Armenia"; break;
-        case 16: ciudad = "Sincelejo"; break;
-        case 17: ciudad = "Valledupar"; break;
-        case 18: ciudad = "Montería"; break;
-        case 19: ciudad = "Popayán"; break;
-        case 20: ciudad = "Tunja"; break;
-        default: 
-            std::cout<<"numero invalido"<<"\n";
-            return personas;
-    }
+    ciudad = ciudades[opcion];
 
     
-    if (ciudad == "todos"){
+    if (!opcion){ //ciudad=="todos"
         for(size_t i = 0; i < tam; ++i){
             if(max_edad == (*personas)[i].edad){
                 personas_edad.push_back((*personas)[i]);
@@ -138,36 +117,16 @@ inline void buscar_edad_referencia(std::unique_ptr<std::vector<Persona>> &person
     int max_edad = (*personas)[0].edad;
     std::string ciudad;
 
+    std::string ciudades[21]={"todos", "Bogotá","Medellín","Cali","Barranquilla","Cartagena","Bucaramanga","Pereira",
+        "Santa Marta","Cúcuta","Ibagué","Manizales","Pasto","Neiva","Villavicencio","Armenia","Sincelejo","Valledupar",
+        "Montería", "Popayán", "Tunja"
+    };
 
-    switch (opcion) {
-        case 0: ciudad = "todos"; break; 
-        case 1:  ciudad = "Bogotá"; break;
-        case 2:  ciudad = "Medellín"; break;
-        case 3:  ciudad = "Cali"; break;
-        case 4:  ciudad = "Barranquilla"; break;
-        case 5:  ciudad = "Cartagena"; break;
-        case 6:  ciudad = "Bucaramanga"; break;
-        case 7:  ciudad = "Pereira"; break;
-        case 8:  ciudad = "Santa Marta"; break;
-        case 9:  ciudad = "Cúcuta"; break;
-        case 10: ciudad = "Ibagué"; break;
-        case 11: ciudad = "Manizales"; break;
-        case 12: ciudad = "Pasto"; break;
-        case 13: ciudad = "Neiva"; break;
-        case 14: ciudad = "Villavicencio"; break;
-        case 15: ciudad = "Armenia"; break;
-        case 16: ciudad = "Sincelejo"; break;
-        case 17: ciudad = "Valledupar"; break;
-        case 18: ciudad = "Montería"; break;
-        case 19: ciudad = "Popayán"; break;
-        case 20: ciudad = "Tunja"; break;
-        default: 
-            std::cout<<"numero invalido"<<"\n";
-            return;
-    }
+    ciudad = ciudades[opcion];
+
 
     
-    if (ciudad == "todos"){
+    if (!opcion){
         for(size_t i = 0; i < tam; ++i){
             if(max_edad == (*personas)[i].edad){
                 personas_edad.push_back((*personas)[i]);
@@ -214,35 +173,15 @@ inline std::unique_ptr<std::vector<Persona>> buscar_patrimonio_valor(std::unique
     std::string ciudad;
 
 
-    switch (opcion) {
-        case 0: ciudad = "todos"; break; 
-        case 1:  ciudad = "Bogotá"; break;
-        case 2:  ciudad = "Medellín"; break;
-        case 3:  ciudad = "Cali"; break;
-        case 4:  ciudad = "Barranquilla"; break;
-        case 5:  ciudad = "Cartagena"; break;
-        case 6:  ciudad = "Bucaramanga"; break;
-        case 7:  ciudad = "Pereira"; break;
-        case 8:  ciudad = "Santa Marta"; break;
-        case 9:  ciudad = "Cúcuta"; break;
-        case 10: ciudad = "Ibagué"; break;
-        case 11: ciudad = "Manizales"; break;
-        case 12: ciudad = "Pasto"; break;
-        case 13: ciudad = "Neiva"; break;
-        case 14: ciudad = "Villavicencio"; break;
-        case 15: ciudad = "Armenia"; break;
-        case 16: ciudad = "Sincelejo"; break;
-        case 17: ciudad = "Valledupar"; break;
-        case 18: ciudad = "Montería"; break;
-        case 19: ciudad = "Popayán"; break;
-        case 20: ciudad = "Tunja"; break;
-        default: 
-            std::cout<<"numero invalido"<<"\n";
-            return personas;
-    }
+    std::string ciudades[21]={"todos", "Bogotá","Medellín","Cali","Barranquilla","Cartagena","Bucaramanga","Pereira",
+        "Santa Marta","Cúcuta","Ibagué","Manizales","Pasto","Neiva","Villavicencio","Armenia","Sincelejo","Valledupar",
+        "Montería", "Popayán", "Tunja"
+    };
+
+    ciudad = ciudades[opcion];
 
 
-    if (ciudad == "todos"){
+    if (!opcion){
         for(size_t i = 0; i < tam; ++i){
             if(max_patrimonio == (*personas)[i].patrimonio){
                 personas_patrimonio.push_back((*personas)[i]);
@@ -289,36 +228,15 @@ inline void buscar_patrimonio_referencia(std::unique_ptr<std::vector<Persona>> &
     int max_patrimonio = (*personas)[0].patrimonio;
     std::string ciudad;
 
+    std::string ciudades[21]={"todos", "Bogotá","Medellín","Cali","Barranquilla","Cartagena","Bucaramanga","Pereira",
+        "Santa Marta","Cúcuta","Ibagué","Manizales","Pasto","Neiva","Villavicencio","Armenia","Sincelejo","Valledupar",
+        "Montería", "Popayán", "Tunja"
+    };
 
-    switch (opcion) {
-        case 0: ciudad = "todos"; break; 
-        case 1:  ciudad = "Bogotá"; break;
-        case 2:  ciudad = "Medellín"; break;
-        case 3:  ciudad = "Cali"; break;
-        case 4:  ciudad = "Barranquilla"; break;
-        case 5:  ciudad = "Cartagena"; break;
-        case 6:  ciudad = "Bucaramanga"; break;
-        case 7:  ciudad = "Pereira"; break;
-        case 8:  ciudad = "Santa Marta"; break;
-        case 9:  ciudad = "Cúcuta"; break;
-        case 10: ciudad = "Ibagué"; break;
-        case 11: ciudad = "Manizales"; break;
-        case 12: ciudad = "Pasto"; break;
-        case 13: ciudad = "Neiva"; break;
-        case 14: ciudad = "Villavicencio"; break;
-        case 15: ciudad = "Armenia"; break;
-        case 16: ciudad = "Sincelejo"; break;
-        case 17: ciudad = "Valledupar"; break;
-        case 18: ciudad = "Montería"; break;
-        case 19: ciudad = "Popayán"; break;
-        case 20: ciudad = "Tunja"; break;
-        default: 
-            std::cout<<"numero invalido"<<"\n";
-            return;
-    }
+    ciudad = ciudades[opcion];
 
 
-    if (ciudad == "todos"){
+    if (!opcion){
         for(size_t i = 0; i < tam; ++i){
             if(max_patrimonio == (*personas)[i].patrimonio){
                 personas_patrimonio.push_back((*personas)[i]);
