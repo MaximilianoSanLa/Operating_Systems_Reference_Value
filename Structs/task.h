@@ -1,3 +1,5 @@
+
+
 #include <iostream>
 #include <ctime>
 #include <vector>
@@ -6,7 +8,7 @@
 //#include "task.h"
 #include "persona.h"
 
-int obtener_edad(std::string fecha_nacimiento) {
+inline int obtener_edad(std::string fecha_nacimiento) {
     std::stringstream fechaNacimiento(fecha_nacimiento);
 
     std::string t;
@@ -36,7 +38,7 @@ int obtener_edad(std::string fecha_nacimiento) {
     
 }
 
-char obtener_grupo(std::string id){
+inline char obtener_grupo(std::string id){
 
     std::string sub = id.substr(id.size() - 2);
 
@@ -53,7 +55,7 @@ char obtener_grupo(std::string id){
     
 }
 
-std::unique_ptr<std::vector<Persona>> buscar_edad_valor(std::unique_ptr<std::vector<Persona>> personas, int opcion){
+inline std::unique_ptr<std::vector<Persona>> buscar_edad_valor(std::unique_ptr<std::vector<Persona>> personas, int opcion){
     std::vector<Persona> personas_edad;
 
     size_t tam = personas->size();
@@ -129,7 +131,7 @@ std::unique_ptr<std::vector<Persona>> buscar_edad_valor(std::unique_ptr<std::vec
     return personas;
 }
 
-void buscar_edad_referencia(std::unique_ptr<std::vector<Persona>> &personas, int opcion){
+inline void buscar_edad_referencia(std::unique_ptr<std::vector<Persona>> &personas, int opcion){
     std::vector<Persona> personas_edad;
 
     size_t tam = personas->size();
@@ -204,7 +206,7 @@ void buscar_edad_referencia(std::unique_ptr<std::vector<Persona>> &personas, int
 
 }
 
-std::unique_ptr<std::vector<Persona>> buscar_patrimonio_valor(std::unique_ptr<std::vector<Persona>> personas, int opcion){
+inline std::unique_ptr<std::vector<Persona>> buscar_patrimonio_valor(std::unique_ptr<std::vector<Persona>> personas, int opcion){
     std::vector<Persona> personas_patrimonio;
 
     size_t tam = personas->size();
@@ -280,7 +282,7 @@ std::unique_ptr<std::vector<Persona>> buscar_patrimonio_valor(std::unique_ptr<st
     return personas;
 }
 
-void buscar_patrimonio_referencia(std::unique_ptr<std::vector<Persona>> &personas, int opcion){
+inline void buscar_patrimonio_referencia(std::unique_ptr<std::vector<Persona>> &personas, int opcion){
     std::vector<Persona> personas_patrimonio;
 
     size_t tam = personas->size();
@@ -355,7 +357,7 @@ void buscar_patrimonio_referencia(std::unique_ptr<std::vector<Persona>> &persona
 
 }
 
-std::unique_ptr<std::vector<Persona>> buscar_patrimonio_grupo_valor(std::unique_ptr<std::vector<Persona>> personas, int opcion){
+inline std::unique_ptr<std::vector<Persona>> buscar_patrimonio_grupo_valor(std::unique_ptr<std::vector<Persona>> personas, int opcion){
     std::vector<Persona> personas_patrimonio;
 
     size_t tam = personas->size();
@@ -394,7 +396,7 @@ std::unique_ptr<std::vector<Persona>> buscar_patrimonio_grupo_valor(std::unique_
     return personas;
 }
 
-void buscar_patrimonio_grupo_referencia(std::unique_ptr<std::vector<Persona>> &personas, int opcion){
+inline void buscar_patrimonio_grupo_referencia(std::unique_ptr<std::vector<Persona>> &personas, int opcion){
     std::vector<Persona> personas_patrimonio;
 
     size_t tam = personas->size();
@@ -431,7 +433,7 @@ void buscar_patrimonio_grupo_referencia(std::unique_ptr<std::vector<Persona>> &p
     }
 }
 
-std::unique_ptr<std::vector<Persona>> listar_personas_valor(std::unique_ptr<std::vector<Persona>> personas){
+inline std::unique_ptr<std::vector<Persona>> listar_personas_valor(std::unique_ptr<std::vector<Persona>> personas){
     std::vector<Persona> personas_A;
     std::vector<Persona> personas_B;
     std::vector<Persona> personas_C;
@@ -483,7 +485,7 @@ std::unique_ptr<std::vector<Persona>> listar_personas_valor(std::unique_ptr<std:
     return personas;
 }
 
-void listar_personas_referencia(std::unique_ptr<std::vector<Persona>> &personas){
+inline void listar_personas_referencia(std::unique_ptr<std::vector<Persona>> &personas){
     std::vector<Persona> personas_A;
     std::vector<Persona> personas_B;
     std::vector<Persona> personas_C;
