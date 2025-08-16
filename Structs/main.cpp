@@ -203,15 +203,17 @@ int main() {
 
                 if(aux == 1){
                     personas = task.buscar_edad_valor(std::move(personas), 0);
+                } else if(aux == 2){
+                    task.buscar_edad_referencia(personas, 0);
                 }
                 else {
-                    task.buscar_edad_referencia(personas, 0);
+                    std::cout<< "Opción invalidad \n";
                 }
                 
 
                 double tiempo_longevo = monitor.detener_tiempo();
                 long memoria_longevo = monitor.obtener_memoria() - memoria_inicio;
-                monitor.registrar("Buscar por ID", tiempo_longevo, memoria_longevo);
+                monitor.registrar("Persona mas longeva", tiempo_longevo, memoria_longevo);
 
                 monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo_longevo, memoria_longevo);
 
@@ -232,7 +234,15 @@ int main() {
                 monitor.iniciar_tiempo();
                 memoria_inicio = monitor.obtener_memoria();
 
-                personas = task.buscar_edad_valor(std::move(personas), ciudad);
+
+                if(aux == 1){
+                    personas = task.buscar_edad_valor(std::move(personas), ciudad);
+                } else if(aux == 2){
+                    task.buscar_edad_referencia(personas, ciudad);
+                }
+                else {
+                    std::cout<< "Opción invalidad \n";
+                }
 
                 double tiempo_longevo_ciudad = monitor.detener_tiempo();
                 long memoria_longevo_ciudad = monitor.obtener_memoria() - memoria_inicio;
@@ -253,7 +263,14 @@ int main() {
                 monitor.iniciar_tiempo();
                 memoria_inicio = monitor.obtener_memoria();
 
-                personas = task.buscar_patrimonio_valor(std::move(personas), 0);
+                if(aux == 1){
+                    personas = task.buscar_patrimonio_valor(std::move(personas), 0);
+                } else if(aux == 2){
+                    task.buscar_patrimonio_referencia(personas, 0);
+                }
+                else {
+                    std::cout<< "Opción invalidad \n";
+                }
 
                 double tiempo_patrimonio = monitor.detener_tiempo();
                 long memoria_patrimonio = monitor.obtener_memoria() - memoria_inicio;
@@ -278,7 +295,14 @@ int main() {
                 monitor.iniciar_tiempo();
                 memoria_inicio = monitor.obtener_memoria();
 
-                personas = task.buscar_patrimonio_valor(std::move(personas), ciudad);
+                if(aux == 1){
+                    personas = task.buscar_patrimonio_valor(std::move(personas), ciudad);
+                } else if(aux == 2){
+                    task.buscar_patrimonio_referencia(personas, ciudad);
+                }
+                else {
+                    std::cout<< "Opción invalidad \n";
+                }
 
                 double tiempo_longevo_ciudad = monitor.detener_tiempo();
                 long memoria_longevo_ciudad = monitor.obtener_memoria() - memoria_inicio;

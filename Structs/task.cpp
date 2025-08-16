@@ -27,7 +27,7 @@ int Task::obtener_edad(std::string fecha_nacimiento){
         return (1900 + ltm->tm_year)-fecha_aux[2];
     }
     
-    if (1 + ltm->tm_mon == fecha_aux[1] && ltm->tm_mday >= fecha_aux[0]) { // Si el mes actual es igual al mes de nacimiento comparo si ya paso o esta pasadno el dia del cumpleaños
+    if (1 + ltm->tm_mon == fecha_aux[1] && ltm->tm_mday >= fecha_aux[0]) { // Si el mes actual es igual al mes de nacimiento comparo si ya paso o esta pasado el dia del cumpleaños
         return (1900 + ltm->tm_year)-fecha_aux[2];
     }
 
