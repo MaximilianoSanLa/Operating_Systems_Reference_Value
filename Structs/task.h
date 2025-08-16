@@ -4,8 +4,8 @@
 #include "persona.h"
 #include <memory> 
 
-class Task{
-    public:
+struct task
+{
         int obtener_edad(std::string fecha_nacimiento);
         char obtener_grupo(std::string ID);
         std::unique_ptr<std::vector<Persona>> buscar_edad_valor(std::unique_ptr<std::vector<Persona>> personas, int opcion);
