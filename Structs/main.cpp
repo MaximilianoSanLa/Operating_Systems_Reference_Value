@@ -20,7 +20,8 @@ void mostrarMenu() {
     std::cout << "\n8. Obtener persona con mayor patrimonio en el pais";
     std::cout << "\n9. Obtener persona con mayor patrimonio por ciudad";
     std::cout << "\n10. Obtener persona con mayor patrimonio por grupo";
-    std::cout << "\n11. Salir";
+    std::cout << "\n11. Listar por grupo";
+    std::cout << "\n12. Salir";
     std::cout << "\nSeleccione una opción: ";
 }
 
@@ -80,7 +81,7 @@ int main() {
         // Iniciar medición de tiempo y memoria para esta operación
         long memoria_inicio;
         
-        if (opcion >= 6 && opcion <= 10) {
+        if (opcion >= 6 && opcion <= 11) {
             std::cout << "\n1. Pasar por valor";
             std::cout << "\n2. Pasar por referencia";
             std::cout << "\nSeleccione una opción: ";
@@ -349,6 +350,27 @@ int main() {
             }
 
             case 11: {
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
+
+                monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
+
+                if(aux == 1){
+                    personas = task.listar_personas_valor(std::move(personas));
+                } else if(aux == 2){
+                    task.listar_personas_referencia(personas);
+                }
+                else {
+                    std::cout<< "Opción invalidad \n";
+                }
+
+                break;
+            }
+
+            case 12: {
                 std::cout << "Saliendo...\n";
                 break;
             }
@@ -365,7 +387,7 @@ int main() {
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
         }
         
-    } while(opcion != 11);
+    } while(opcion != 12);
     
     return 0;
 }

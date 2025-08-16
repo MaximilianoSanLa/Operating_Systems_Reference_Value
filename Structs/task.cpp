@@ -38,7 +38,7 @@ int Task::obtener_edad(std::string fecha_nacimiento){
 
 char Task::obtener_grupo(std::string id){
 
-    std::string sub = id.substr(8, 2);
+    std::string sub = id.substr(id.size() - 2);
 
     int aux = stoi(sub);
 
@@ -429,4 +429,106 @@ void Task::buscar_patrimonio_grupo_referencia(std::unique_ptr<std::vector<Person
     for(size_t i = 0; i < tam_patrimonio; ++i){
         personas_patrimonio[i].mostrar();
     }
+}
+
+std::unique_ptr<std::vector<Persona>> Task::listar_personas_valor(std::unique_ptr<std::vector<Persona>> personas){
+    std::vector<Persona> personas_A;
+    std::vector<Persona> personas_B;
+    std::vector<Persona> personas_C;
+
+    size_t tam = personas->size();
+    
+    for(size_t i = 0; i < tam; ++i){
+        if((*personas)[i].grupo == 'A'){
+            personas_A.push_back((*personas)[i]);
+        }
+
+        if((*personas)[i].grupo == 'B'){
+            personas_B.push_back((*personas)[i]);
+        }
+
+        if((*personas)[i].grupo == 'C'){
+            personas_C.push_back((*personas)[i]);
+        }
+
+        
+    }
+
+    size_t tam_A = personas_A.size();
+    size_t tam_B = personas_B.size();
+    size_t tam_C = personas_C.size();
+
+    std::cout<<"\n\n=====================GRUPO A=====================\n\n";
+
+    for(size_t i = 0; i < tam_A; ++i){
+        personas_A[i].mostrar();
+    }
+
+    std::cout<<"\n\n=====================GRUPO B=====================\n\n";
+
+    for(size_t i = 0; i < tam_B; ++i){
+        personas_B[i].mostrar();
+    }
+
+    std::cout<<"\n\n=====================GRUPO C=====================\n\n";
+
+    for(size_t i = 0; i < tam_C; ++i){
+        personas_C[i].mostrar();
+    }
+
+    std::cout<<"GRUPO A: " <<tam_A <<"\n";
+    std::cout<<"GRUPO B: " <<tam_B <<"\n";
+    std::cout<<"GRUPO C: " <<tam_C <<"\n";
+
+    return personas;
+}
+
+void Task::listar_personas_referencia(std::unique_ptr<std::vector<Persona>> &personas){
+    std::vector<Persona> personas_A;
+    std::vector<Persona> personas_B;
+    std::vector<Persona> personas_C;
+
+    size_t tam = personas->size();
+    
+    for(size_t i = 0; i < tam; ++i){
+        if((*personas)[i].grupo == 'A'){
+            personas_A.push_back((*personas)[i]);
+        }
+
+        if((*personas)[i].grupo == 'B'){
+            personas_B.push_back((*personas)[i]);
+        }
+
+        if((*personas)[i].grupo == 'C'){
+            personas_C.push_back((*personas)[i]);
+        }
+
+        
+    }
+
+    size_t tam_A = personas_A.size();
+    size_t tam_B = personas_B.size();
+    size_t tam_C = personas_C.size();
+
+    std::cout<<"\n\n=====================GRUPO A=====================\n\n";
+
+    for(size_t i = 0; i < tam_A; ++i){
+        personas_A[i].mostrar();
+    }
+
+    std::cout<<"\n\n=====================GRUPO B=====================\n\n";
+
+    for(size_t i = 0; i < tam_B; ++i){
+        personas_B[i].mostrar();
+    }
+
+    std::cout<<"\n\n=====================GRUPO C=====================\n\n";
+
+    for(size_t i = 0; i < tam_C; ++i){
+        personas_C[i].mostrar();
+    }
+
+    std::cout<<"GRUPO A: " <<tam_A <<"\n";
+    std::cout<<"GRUPO B: " <<tam_B <<"\n";
+    std::cout<<"GRUPO C: " <<tam_C <<"\n";
 }
