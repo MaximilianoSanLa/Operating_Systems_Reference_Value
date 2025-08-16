@@ -19,7 +19,8 @@ void mostrarMenu() {
     std::cout << "\n7. Obtener persona mas longeva por ciudad";
     std::cout << "\n8. Obtener persona con mayor patrimonio en el pais";
     std::cout << "\n9. Obtener persona con mayor patrimonio por ciudad";
-    std::cout << "\n10. Salir";
+    std::cout << "\n10. Obtener persona con mayor patrimonio por grupo";
+    std::cout << "\n11. Salir";
     std::cout << "\nSeleccione una opción: ";
 }
 
@@ -48,6 +49,14 @@ void mostrarCiudades() {
     std::cout << "\nSeleccione una ciudad: ";
 }
 
+void mostrarGrupos() {
+    std::cout << "\n\n=== LISTA DE GRUPOS ===";
+    std::cout << "\n1. A";
+    std::cout << "\n2. B";
+    std::cout << "\n3. C";
+    std::cout << "\nSeleccione un grupo: ";
+}
+
 
 int main() {
     srand(time(nullptr));
@@ -71,7 +80,7 @@ int main() {
         // Iniciar medición de tiempo y memoria para esta operación
         long memoria_inicio;
         
-        if (opcion >= 6 && opcion <= 9) {
+        if (opcion >= 6 && opcion <= 10) {
             std::cout << "\n1. Pasar por valor";
             std::cout << "\n2. Pasar por referencia";
             std::cout << "\nSeleccione una opción: ";
@@ -314,6 +323,32 @@ int main() {
             }
 
             case 10: {
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
+
+                int grupo;
+
+                mostrarGrupos();
+                std::cin >> grupo;
+
+                monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
+
+                if(aux == 1){
+                    personas = task.buscar_patrimonio_grupo_valor(std::move(personas), grupo);
+                } else if(aux == 2){
+                    task.buscar_patrimonio_grupo_referencia(personas, grupo);
+                }
+                else {
+                    std::cout<< "Opción invalidad \n";
+                }
+
+                break;
+            }
+
+            case 11: {
                 std::cout << "Saliendo...\n";
                 break;
             }
@@ -330,7 +365,7 @@ int main() {
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
         }
         
-    } while(opcion != 10);
+    } while(opcion != 11);
     
     return 0;
 }

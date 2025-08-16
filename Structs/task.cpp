@@ -354,3 +354,79 @@ void Task::buscar_patrimonio_referencia(std::unique_ptr<std::vector<Persona>> &p
     }
 
 }
+
+std::unique_ptr<std::vector<Persona>> Task::buscar_patrimonio_grupo_valor(std::unique_ptr<std::vector<Persona>> personas, int opcion){
+    std::vector<Persona> personas_patrimonio;
+
+    size_t tam = personas->size();
+    int max_patrimonio = (*personas)[0].patrimonio;
+    char grupo;
+
+    switch (opcion) {
+        case 1:  grupo = 'A'; break;
+        case 2:  grupo = 'B'; break;
+        case 3:  grupo = 'C'; break;
+        default: 
+            std::cout<<"numero invalido"<<"\n";
+            return personas;
+    }
+    
+    for(size_t i = 0; i < tam; ++i){
+        if(grupo == (*personas)[i].grupo){
+            if(max_patrimonio == (*personas)[i].patrimonio){
+                personas_patrimonio.push_back((*personas)[i]);
+            }
+
+            if(max_patrimonio < (*personas)[i].patrimonio){
+                personas_patrimonio.clear();
+                personas_patrimonio.push_back((*personas)[i]);
+                max_patrimonio = (*personas)[i].patrimonio;
+            }
+        }
+    }
+
+    size_t tam_patrimonio = personas_patrimonio.size();
+
+    for(size_t i = 0; i < tam_patrimonio; ++i){
+        personas_patrimonio[i].mostrar();
+    }
+
+    return personas;
+}
+
+void Task::buscar_patrimonio_grupo_referencia(std::unique_ptr<std::vector<Persona>> &personas, int opcion){
+    std::vector<Persona> personas_patrimonio;
+
+    size_t tam = personas->size();
+    int max_patrimonio = (*personas)[0].patrimonio;
+    char grupo;
+
+    switch (opcion) {
+        case 1:  grupo = 'A'; break;
+        case 2:  grupo = 'B'; break;
+        case 3:  grupo = 'C'; break;
+        default: 
+            std::cout<<"numero invalido"<<"\n";
+            return;
+    }
+    
+    for(size_t i = 0; i < tam; ++i){
+        if(grupo == (*personas)[i].grupo){
+            if(max_patrimonio == (*personas)[i].patrimonio){
+                personas_patrimonio.push_back((*personas)[i]);
+            }
+
+            if(max_patrimonio < (*personas)[i].patrimonio){
+                personas_patrimonio.clear();
+                personas_patrimonio.push_back((*personas)[i]);
+                max_patrimonio = (*personas)[i].patrimonio;
+            }
+        }
+    }
+
+    size_t tam_patrimonio = personas_patrimonio.size();
+
+    for(size_t i = 0; i < tam_patrimonio; ++i){
+        personas_patrimonio[i].mostrar();
+    }
+}

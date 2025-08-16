@@ -12,6 +12,8 @@ class Task{
         std::unique_ptr<std::vector<Persona>> buscar_patrimonio_valor(std::unique_ptr<std::vector<Persona>> personas, int opcion);
         void buscar_edad_referencia(std::unique_ptr<std::vector<Persona>> &personas, int opcion);
         void buscar_patrimonio_referencia(std::unique_ptr<std::vector<Persona>> &personas, int opcion);
+        std::unique_ptr<std::vector<Persona>> buscar_patrimonio_grupo_valor(std::unique_ptr<std::vector<Persona>> personas, int opcion);
+        void buscar_patrimonio_grupo_referencia(std::unique_ptr<std::vector<Persona>> &personas, int opcion);
 
 };
 
