@@ -5,8 +5,31 @@
 #include <vector>
 #include <string>
 #include <memory> 
+#include <map>
+#include <algorithm>
 //#include "task.h"
 #include "persona.h"
+
+// Tutorial de sorting para map: https://www.geeksforgeeks.org/cpp/sorting-a-map-by-value-in-c-stl
+
+inline bool cmp(std::pair<std::string, double>& a, std::pair<std::string, double>& b){
+    return a.second > b.second;
+}
+
+inline void organizar(std::map<std::string, double>& m){
+
+    std::vector<std::pair<std::string, double>> a;
+
+    for (auto& it : m) {
+        a.push_back(it);
+    }
+
+    std::sort(a.begin(), a.end(), cmp);
+
+    for (auto& it : a){
+        std::cout << it.first << ' ' << it.second << "\n";
+    }
+}
 
 inline int obtener_edad(std::string fecha_nacimiento) {
     std::stringstream fechaNacimiento(fecha_nacimiento);
@@ -58,7 +81,7 @@ inline char obtener_grupo(std::string id){
 inline void buscar_edad_valor(std::vector<Persona> personas, int opcion){
     std::vector<Persona> personas_edad;
 
-    std::cout << "Dirección del vector dentro de la función: " << personas.data() << std::endl;
+    //std::cout << "Dirección del vector dentro de la función: " << personas.data() << std::endl;
 
 
     size_t tam = personas.size();
@@ -450,4 +473,204 @@ inline void listar_personas_referencia(std::unique_ptr<std::vector<Persona>> &pe
     std::cout<<"GRUPO A: " <<tam_A <<"\n";
     std::cout<<"GRUPO B: " <<tam_B <<"\n";
     std::cout<<"GRUPO C: " <<tam_C <<"\n";
+}
+
+inline void obtener_promedio_personas(std::vector<Persona> personas){
+    
+    std::map<std::string, double> ciudades_patrimonio;
+
+    size_t tam = personas.size();
+    double total_patrimonio = 0;
+    double total_ciudadanos = 0;
+
+    
+
+    std::string ciudades[20]={"Bogotá","Medellín","Cali","Barranquilla","Cartagena","Bucaramanga","Pereira",
+        "Santa Marta","Cúcuta","Ibagué","Manizales","Pasto","Neiva","Villavicencio","Armenia","Sincelejo","Valledupar",
+        "Montería", "Popayán", "Tunja"
+    };
+
+    for (std::string ciudad : ciudades){
+        for(size_t i = 0; i < tam; ++i){
+            if (personas[i].ciudadNacimiento == ciudad){
+                personas[i].mostrar();
+                total_patrimonio += personas[i].patrimonio;
+                total_ciudadanos++;
+            }
+        }
+
+        if(total_ciudadanos == 0){
+            break;
+        }
+
+        total_patrimonio = total_patrimonio / total_ciudadanos;
+        
+        ciudades_patrimonio[ciudad] = total_patrimonio;
+        
+        total_patrimonio = 0;
+        total_ciudadanos = 0;
+
+    }
+
+    organizar(ciudades_patrimonio);
+
+}
+
+inline void obtener_promedio_personas_referencia(std::unique_ptr<std::vector<Persona>> &personas){
+    
+    std::map<std::string, double> ciudades_patrimonio;
+
+    size_t tam = personas->size();
+    double total_patrimonio = 0;
+    double total_ciudadanos = 0;
+
+    
+
+    std::string ciudades[20]={"Bogotá","Medellín","Cali","Barranquilla","Cartagena","Bucaramanga","Pereira",
+        "Santa Marta","Cúcuta","Ibagué","Manizales","Pasto","Neiva","Villavicencio","Armenia","Sincelejo","Valledupar",
+        "Montería", "Popayán", "Tunja"
+    };
+
+    for (std::string ciudad : ciudades){
+        for(size_t i = 0; i < tam; ++i){
+            if ((*personas)[i].ciudadNacimiento == ciudad){
+                (*personas)[i].mostrar();
+                total_patrimonio += (*personas)[i].patrimonio;
+                total_ciudadanos++;
+            }
+        }
+
+        if(total_ciudadanos == 0){
+            break;
+        }
+
+        total_patrimonio = total_patrimonio / total_ciudadanos;
+        
+        ciudades_patrimonio[ciudad] = total_patrimonio;
+        
+        total_patrimonio = 0;
+        total_ciudadanos = 0;
+
+    }
+
+    organizar(ciudades_patrimonio);
+
+}
+
+inline void obtener_personas_mayores(std::vector<Persona> personas, int opcion){
+
+    double tam = personas.size();
+    double tam_60 = 0;
+    char grupo;
+
+    switch (opcion) {
+        case 1:  grupo = 'A'; break;
+        case 2:  grupo = 'B'; break;
+        case 3:  grupo = 'C'; break;
+        default: 
+            std::cout<<"numero invalido"<<"\n";
+            return;
+    }
+
+    for(size_t i = 0; i < tam; ++i){
+        
+        if(grupo == personas[i].grupo){
+            if(personas[i].edad >= 60){
+                tam_60++;
+            }
+        }
+        
+    }
+
+    double porcentaje = (tam_60/tam) * 100.0;
+
+    std::cout<<"\nEl " << porcentaje <<"%"<<" de la población tiene 60 o mas años \n\n";
+}
+
+inline void obtener_personas_mayores_referencia(std::unique_ptr<std::vector<Persona>> &personas, int opcion){
+
+    double tam = personas->size();
+    double tam_60 = 0;
+    char grupo;
+
+    switch (opcion) {
+        case 1:  grupo = 'A'; break;
+        case 2:  grupo = 'B'; break;
+        case 3:  grupo = 'C'; break;
+        default: 
+            std::cout<<"numero invalido"<<"\n";
+            return;
+    }
+
+    for(size_t i = 0; i < tam; ++i){
+        if(grupo == (*personas)[i].grupo){
+            if((*personas)[i].edad >= 60){
+                tam_60++;
+            }
+        }
+        
+    }
+
+    double porcentaje = (tam_60/tam) * 100.0;
+
+    std::cout<<"\nEl " << porcentaje <<"%"<<" de la población tiene 60 o mas años \n\n";
+}
+
+inline void obtener_personas_menores(std::vector<Persona> personas, int opcion){
+
+    double tam = personas.size();
+    double tam_menores = 0;
+    char grupo;
+
+    switch (opcion) {
+        case 1:  grupo = 'A'; break;
+        case 2:  grupo = 'B'; break;
+        case 3:  grupo = 'C'; break;
+        default: 
+            std::cout<<"numero invalido"<<"\n";
+            return;
+    }
+
+    for(size_t i = 0; i < tam; ++i){
+        
+        if(grupo == personas[i].grupo){
+            if(personas[i].edad >= 18 && personas[i].edad >= 25){
+                tam_menores++;
+            }
+        }
+        
+    }
+
+    double porcentaje = (tam_menores/tam) * 100.0;
+
+    std::cout<<"\nEl " << porcentaje <<"%"<<" de la población tiene entre 18 y 25 años \n\n";
+}
+
+inline void obtener_personas_menores_referencia(std::unique_ptr<std::vector<Persona>> &personas, int opcion){
+
+    double tam = personas->size();
+    double tam_menores = 0;
+    char grupo;
+
+    switch (opcion) {
+        case 1:  grupo = 'A'; break;
+        case 2:  grupo = 'B'; break;
+        case 3:  grupo = 'C'; break;
+        default: 
+            std::cout<<"numero invalido"<<"\n";
+            return;
+    }
+
+    for(size_t i = 0; i < tam; ++i){
+        if(grupo == (*personas)[i].grupo){
+            if((*personas)[i].edad >= 18 && (*personas)[i].edad <= 25){
+                tam_menores++;
+            }
+        }
+        
+    }
+
+    double porcentaje = (tam_menores/tam) * 100.0;
+
+    std::cout<<"\nEl " << porcentaje <<"%"<<" de la población tiene entre 18 y 25 años \n\n";
 }

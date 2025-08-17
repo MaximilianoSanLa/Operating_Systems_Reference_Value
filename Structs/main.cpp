@@ -21,7 +21,10 @@ void mostrarMenu() {
     std::cout << "\n9. Obtener persona con mayor patrimonio por ciudad";
     std::cout << "\n10. Obtener persona con mayor patrimonio por grupo";
     std::cout << "\n11. Listar por grupo";
-    std::cout << "\n12. Salir";
+    std::cout << "\n12. Obtener las ciudades con el patrimonio promedio mas alto";
+    std::cout << "\n13. Porcentaje de personas mayores a 60 años por grupo";
+    std::cout << "\n14. Obtener personas entre 18 y 25 años por grupo";
+    std::cout << "\n15. Salir";
     std::cout << "\nSeleccione una opción: ";
 }
 
@@ -81,7 +84,7 @@ int main() {
         // Iniciar medición de tiempo y memoria para esta operación
         long memoria_inicio = monitor.obtener_memoria();
         
-        if (opcion >= 6 && opcion <= 11) {
+        if (opcion >= 6 && opcion <= 14) {
             std::cout << "\n1. Pasar por valor";
             std::cout << "\n2. Pasar por referencia";
             std::cout << "\nSeleccione una opción: ";
@@ -365,13 +368,18 @@ int main() {
                     break;
                 }
 
+                int grupo;
+
+                mostrarGrupos();
+                std::cin >> grupo;
+
                 monitor.iniciar_tiempo();
                 memoria_inicio = monitor.obtener_memoria();
 
                 if(aux == 1){
-                    listar_personas_valor(personas_valor);
+                    listar_personas_valor(personas_valor, grupo);
                 } else if(aux == 2){
-                    listar_personas_referencia(personas);
+                    listar_personas_referencia(personas, grupo);
                 }
                 else {
                     std::cout<< "Opción invalidad \n";
@@ -387,6 +395,104 @@ int main() {
             }
 
             case 12: {
+
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
+
+                monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
+
+
+                if(aux == 1){
+                    obtener_promedio_personas(personas_valor);
+                } else if(aux == 2){
+                    obtener_promedio_personas_referencia(personas);
+                }
+                else {
+                    std::cout<< "Opción invalidad \n";
+                }
+
+                
+
+                double tiempo_grupo = monitor.detener_tiempo();
+                long memoria_grupo = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Listar grupos", tiempo_grupo, memoria_grupo);
+
+                monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo_grupo, memoria_grupo);
+                break;
+            }
+
+            case 13: {
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
+
+                int grupo;
+
+                mostrarGrupos();
+                std::cin >> grupo;
+
+                monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
+
+
+                if(aux == 1){
+                    obtener_personas_mayores(personas_valor, grupo);
+                } else if(aux == 2){
+                    obtener_personas_mayores_referencia(personas, grupo);
+                }
+                else {
+                    std::cout<< "Opción invalidad \n";
+                }
+
+                
+
+                double tiempo_grupo = monitor.detener_tiempo();
+                long memoria_grupo = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Listar grupos", tiempo_grupo, memoria_grupo);
+
+                monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo_grupo, memoria_grupo);
+                break;
+            }
+
+            case 14: {
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
+
+                int grupo;
+
+                mostrarGrupos();
+                std::cin >> grupo;
+
+                monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
+
+
+                if(aux == 1){
+                    obtener_personas_menores(personas_valor, grupo);
+                } else if(aux == 2){
+                    obtener_personas_menores_referencia(personas, grupo);
+                }
+                else {
+                    std::cout<< "Opción invalidad \n";
+                }
+
+                
+
+                double tiempo_grupo = monitor.detener_tiempo();
+                long memoria_grupo = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Listar grupos", tiempo_grupo, memoria_grupo);
+
+                monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo_grupo, memoria_grupo);
+                break;
+            }
+
+            case 15: {
                 std::cout << "Saliendo...\n";
                 break;
             }
@@ -403,7 +509,7 @@ int main() {
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
         }
         
-    } while(opcion != 12);
+    } while(opcion != 15);
     
     return 0;
 }
