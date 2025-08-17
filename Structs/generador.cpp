@@ -97,6 +97,10 @@ Persona generarPersona() {
     p.deudas = randomDouble(0, p.patrimonio * 0.7);
     // 70% probabilidad de ser declarante si gana > 50 millones
     p.declaranteRenta = (p.ingresosAnuales > 50000000) && (rand() % 100 > 30);
+
+    p.edad = obtener_edad(p.fechaNacimiento);
+
+    p.grupo = obtener_grupo(p.id);
     
     return p; // Retorna la estructura completa
 }

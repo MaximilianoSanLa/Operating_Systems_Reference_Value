@@ -55,11 +55,14 @@ inline char obtener_grupo(std::string id){
     
 }
 
-inline std::unique_ptr<std::vector<Persona>> buscar_edad_valor(std::unique_ptr<std::vector<Persona>> personas, int opcion){
+inline void buscar_edad_valor(std::vector<Persona> personas, int opcion){
     std::vector<Persona> personas_edad;
 
-    size_t tam = personas->size();
-    int max_edad = (*personas)[0].edad;
+    std::cout << "Dirección del vector dentro de la función: " << personas.data() << std::endl;
+
+
+    size_t tam = personas.size();
+    int max_edad = personas[0].edad;
     std::string ciudad;
 
     std::string ciudades[21]={"todos", "Bogotá","Medellín","Cali","Barranquilla","Cartagena","Bucaramanga","Pereira",
@@ -72,29 +75,29 @@ inline std::unique_ptr<std::vector<Persona>> buscar_edad_valor(std::unique_ptr<s
     
     if (!opcion){ //ciudad=="todos"
         for(size_t i = 0; i < tam; ++i){
-            if(max_edad == (*personas)[i].edad){
-                personas_edad.push_back((*personas)[i]);
+            if(max_edad == personas[i].edad){
+                personas_edad.push_back(personas[i]);
             }
 
-            if(max_edad < (*personas)[i].edad){
+            if(max_edad < personas[i].edad){
                 personas_edad.clear();
-                personas_edad.push_back((*personas)[i]);
-                max_edad = (*personas)[i].edad;
+                personas_edad.push_back(personas[i]);
+                max_edad = personas[i].edad;
             }
         }
     }
     else {
         for(size_t i = 0; i < tam; ++i){
 
-            if(ciudad == (*personas)[i].ciudadNacimiento){
-                if(max_edad == (*personas)[i].edad){
-                    personas_edad.push_back((*personas)[i]);
+            if(ciudad == personas[i].ciudadNacimiento){
+                if(max_edad == personas[i].edad){
+                    personas_edad.push_back(personas[i]);
                 }
 
-                if(max_edad < (*personas)[i].edad){
+                if(max_edad < personas[i].edad){
                     personas_edad.clear();
-                    personas_edad.push_back((*personas)[i]);
-                    max_edad = (*personas)[i].edad;
+                    personas_edad.push_back(personas[i]);
+                    max_edad = personas[i].edad;
                 }
             }
             
@@ -107,7 +110,6 @@ inline std::unique_ptr<std::vector<Persona>> buscar_edad_valor(std::unique_ptr<s
         personas_edad[i].mostrar();
     }
 
-    return personas;
 }
 
 inline void buscar_edad_referencia(std::unique_ptr<std::vector<Persona>> &personas, int opcion){
@@ -123,6 +125,7 @@ inline void buscar_edad_referencia(std::unique_ptr<std::vector<Persona>> &person
     };
 
     ciudad = ciudades[opcion];
+    
 
 
     
@@ -165,11 +168,11 @@ inline void buscar_edad_referencia(std::unique_ptr<std::vector<Persona>> &person
 
 }
 
-inline std::unique_ptr<std::vector<Persona>> buscar_patrimonio_valor(std::unique_ptr<std::vector<Persona>> personas, int opcion){
+inline void buscar_patrimonio_valor(std::vector<Persona> personas, int opcion){
     std::vector<Persona> personas_patrimonio;
 
-    size_t tam = personas->size();
-    int max_patrimonio = (*personas)[0].patrimonio;
+    size_t tam = personas.size();
+    int max_patrimonio = personas[0].patrimonio;
     std::string ciudad;
 
 
@@ -183,29 +186,29 @@ inline std::unique_ptr<std::vector<Persona>> buscar_patrimonio_valor(std::unique
 
     if (!opcion){
         for(size_t i = 0; i < tam; ++i){
-            if(max_patrimonio == (*personas)[i].patrimonio){
-                personas_patrimonio.push_back((*personas)[i]);
+            if(max_patrimonio == personas[i].patrimonio){
+                personas_patrimonio.push_back(personas[i]);
             }
 
-            if(max_patrimonio < (*personas)[i].patrimonio){
+            if(max_patrimonio < personas[i].patrimonio){
                 personas_patrimonio.clear();
-                personas_patrimonio.push_back((*personas)[i]);
-                max_patrimonio = (*personas)[i].patrimonio;
+                personas_patrimonio.push_back(personas[i]);
+                max_patrimonio = personas[i].patrimonio;
             }
         }
     }
     else {
         for(size_t i = 0; i < tam; ++i){
 
-            if(ciudad == (*personas)[i].ciudadNacimiento){
-                if(max_patrimonio == (*personas)[i].patrimonio){
-                    personas_patrimonio.push_back((*personas)[i]);
+            if(ciudad == personas[i].ciudadNacimiento){
+                if(max_patrimonio == personas[i].patrimonio){
+                    personas_patrimonio.push_back(personas[i]);
                 }
 
-                if(max_patrimonio < (*personas)[i].patrimonio){
+                if(max_patrimonio < personas[i].patrimonio){
                     personas_patrimonio.clear();
-                    personas_patrimonio.push_back((*personas)[i]);
-                    max_patrimonio = (*personas)[i].patrimonio;
+                    personas_patrimonio.push_back(personas[i]);
+                    max_patrimonio = personas[i].patrimonio;
                 }
             }
             
@@ -218,7 +221,6 @@ inline std::unique_ptr<std::vector<Persona>> buscar_patrimonio_valor(std::unique
         personas_patrimonio[i].mostrar();
     }
 
-    return personas;
 }
 
 inline void buscar_patrimonio_referencia(std::unique_ptr<std::vector<Persona>> &personas, int opcion){
@@ -275,11 +277,11 @@ inline void buscar_patrimonio_referencia(std::unique_ptr<std::vector<Persona>> &
 
 }
 
-inline std::unique_ptr<std::vector<Persona>> buscar_patrimonio_grupo_valor(std::unique_ptr<std::vector<Persona>> personas, int opcion){
+inline void buscar_patrimonio_grupo_valor(std::vector<Persona> personas, int opcion){
     std::vector<Persona> personas_patrimonio;
 
-    size_t tam = personas->size();
-    int max_patrimonio = (*personas)[0].patrimonio;
+    size_t tam = personas.size();
+    int max_patrimonio = personas[0].patrimonio;
     char grupo;
 
     switch (opcion) {
@@ -288,19 +290,19 @@ inline std::unique_ptr<std::vector<Persona>> buscar_patrimonio_grupo_valor(std::
         case 3:  grupo = 'C'; break;
         default: 
             std::cout<<"numero invalido"<<"\n";
-            return personas;
+            return;
     }
     
     for(size_t i = 0; i < tam; ++i){
-        if(grupo == (*personas)[i].grupo){
-            if(max_patrimonio == (*personas)[i].patrimonio){
-                personas_patrimonio.push_back((*personas)[i]);
+        if(grupo == personas[i].grupo){
+            if(max_patrimonio == personas[i].patrimonio){
+                personas_patrimonio.push_back(personas[i]);
             }
 
-            if(max_patrimonio < (*personas)[i].patrimonio){
+            if(max_patrimonio < personas[i].patrimonio){
                 personas_patrimonio.clear();
-                personas_patrimonio.push_back((*personas)[i]);
-                max_patrimonio = (*personas)[i].patrimonio;
+                personas_patrimonio.push_back(personas[i]);
+                max_patrimonio = personas[i].patrimonio;
             }
         }
     }
@@ -311,7 +313,6 @@ inline std::unique_ptr<std::vector<Persona>> buscar_patrimonio_grupo_valor(std::
         personas_patrimonio[i].mostrar();
     }
 
-    return personas;
 }
 
 inline void buscar_patrimonio_grupo_referencia(std::unique_ptr<std::vector<Persona>> &personas, int opcion){
@@ -351,24 +352,24 @@ inline void buscar_patrimonio_grupo_referencia(std::unique_ptr<std::vector<Perso
     }
 }
 
-inline std::unique_ptr<std::vector<Persona>> listar_personas_valor(std::unique_ptr<std::vector<Persona>> personas){
+inline void listar_personas_valor(std::vector<Persona> personas){
     std::vector<Persona> personas_A;
     std::vector<Persona> personas_B;
     std::vector<Persona> personas_C;
 
-    size_t tam = personas->size();
+    size_t tam = personas.size();
     
     for(size_t i = 0; i < tam; ++i){
-        if((*personas)[i].grupo == 'A'){
-            personas_A.push_back((*personas)[i]);
+        if(personas[i].grupo == 'A'){
+            personas_A.push_back(personas[i]);
         }
 
-        if((*personas)[i].grupo == 'B'){
-            personas_B.push_back((*personas)[i]);
+        if(personas[i].grupo == 'B'){
+            personas_B.push_back(personas[i]);
         }
 
-        if((*personas)[i].grupo == 'C'){
-            personas_C.push_back((*personas)[i]);
+        if(personas[i].grupo == 'C'){
+            personas_C.push_back(personas[i]);
         }
 
         
@@ -399,8 +400,6 @@ inline std::unique_ptr<std::vector<Persona>> listar_personas_valor(std::unique_p
     std::cout<<"GRUPO A: " <<tam_A <<"\n";
     std::cout<<"GRUPO B: " <<tam_B <<"\n";
     std::cout<<"GRUPO C: " <<tam_C <<"\n";
-
-    return personas;
 }
 
 inline void listar_personas_referencia(std::unique_ptr<std::vector<Persona>> &personas){

@@ -64,7 +64,7 @@ int main() {
     
     // Usar unique_ptr para manejar la colección de personas
     std::unique_ptr<std::vector<Persona>> personas = nullptr;
-    std::unique_ptr<std::vector<Persona>> personas_aux = nullptr;
+    std::vector<Persona> personas_valor;
     Monitor monitor;
     //Task task;
     
@@ -79,7 +79,7 @@ int main() {
         std::string idBusqueda;
         
         // Iniciar medición de tiempo y memoria para esta operación
-        long memoria_inicio = monitor.obtener_memoria();;
+        long memoria_inicio = monitor.obtener_memoria();
         
         if (opcion >= 6 && opcion <= 11) {
             std::cout << "\n1. Pasar por valor";
@@ -96,6 +96,7 @@ int main() {
                 std::cin >> n;
 
                 monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
                 
                 if (n <= 0) {
                     std::cout << "Error: Debe generar al menos 1 persona\n";
@@ -103,8 +104,15 @@ int main() {
                 }
                 
                 // Generar el nuevo conjunto de datos
-                personas = std::make_unique<std::vector<Persona>>(generarColeccion(n));
-                tam = personas->size();
+                // Generar el nuevo conjunto de personas
+                auto nuevasPersonas = generarColeccion(n);
+                tam = nuevasPersonas.size();
+                
+                personas_valor = nuevasPersonas;
+
+                // Mover el conjunto al puntero inteligente (propiedad única)
+                personas = std::make_unique<std::vector<Persona>>(std::move(nuevasPersonas));
+                
                 
                 double tiempo_gen = monitor.detener_tiempo();
                 long memoria_gen = monitor.obtener_memoria() - memoria_inicio;
@@ -123,6 +131,7 @@ int main() {
                 }
                 
                 monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
                 
                 tam = personas->size();
                 std::cout << "\n=== RESUMEN DE PERSONAS (" << tam << ") ===\n";
@@ -144,6 +153,7 @@ int main() {
                 }
                 
                 monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
 
                 tam = personas->size();
                 std::cout << "\nIngrese el índice (0-" << tam-1 << "): ";
@@ -175,6 +185,7 @@ int main() {
                 std::cin >> idBusqueda;
 
                 monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
                 
                 if(const Persona* encontrada = buscarPorID(*personas, idBusqueda)) {
                     encontrada->mostrar();
@@ -206,7 +217,7 @@ int main() {
                 monitor.iniciar_tiempo();
 
                 if(aux == 1){
-                    personas = buscar_edad_valor(std::move(personas), 0);
+                    buscar_edad_valor(personas_valor, 0);
                 } else if(aux == 2){
                     buscar_edad_referencia(personas, 0);
                 }
@@ -236,9 +247,10 @@ int main() {
                 std::cin >> ciudad;
 
                 monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
 
                 if(aux == 1){
-                    personas = buscar_edad_valor(std::move(personas), ciudad);
+                    buscar_edad_valor(personas_valor, ciudad);
                 } else if(aux == 2){
                     buscar_edad_referencia(personas, ciudad);
                 }
@@ -263,9 +275,10 @@ int main() {
                 }
 
                 monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
 
                 if(aux == 1){
-                    personas = buscar_patrimonio_valor(std::move(personas), 0);
+                    buscar_patrimonio_valor(personas_valor, 0);
                 } else if(aux == 2){
                     buscar_patrimonio_referencia(personas, 0);
                 }
@@ -294,9 +307,10 @@ int main() {
                 std::cin >> ciudad;
 
                 monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
 
                 if(aux == 1){
-                    personas = buscar_patrimonio_valor(std::move(personas), ciudad);
+                    buscar_patrimonio_valor(personas_valor, ciudad);
                 } else if(aux == 2){
                     buscar_patrimonio_referencia(personas, ciudad);
                 }
@@ -325,9 +339,10 @@ int main() {
                 std::cin >> grupo;
 
                 monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
 
                 if(aux == 1){
-                    personas = buscar_patrimonio_grupo_valor(std::move(personas), grupo);
+                    buscar_patrimonio_grupo_valor(personas_valor, grupo);
                 } else if(aux == 2){
                     buscar_patrimonio_grupo_referencia(personas, grupo);
                 }
@@ -351,9 +366,10 @@ int main() {
                 }
 
                 monitor.iniciar_tiempo();
+                memoria_inicio = monitor.obtener_memoria();
 
                 if(aux == 1){
-                    personas = listar_personas_valor(std::move(personas));
+                    listar_personas_valor(personas_valor);
                 } else if(aux == 2){
                     listar_personas_referencia(personas);
                 }
