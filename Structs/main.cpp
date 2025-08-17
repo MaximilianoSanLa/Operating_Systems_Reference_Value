@@ -377,9 +377,9 @@ int main() {
                 memoria_inicio = monitor.obtener_memoria();
 
                 if(aux == 1){
-                    listar_personas_valor(personas_valor, grupo);
+                    listar_personas_valor(personas_valor);
                 } else if(aux == 2){
-                    listar_personas_referencia(personas, grupo);
+                    listar_personas_referencia(personas);
                 }
                 else {
                     std::cout<< "Opción invalidad \n";
