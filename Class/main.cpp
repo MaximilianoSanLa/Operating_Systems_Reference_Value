@@ -347,6 +347,8 @@ int main() {
         std::map<std::string, double>  ref;
         std::map<std::string, std::vector<Persona>> val1;
         std::map<std::string, std::vector<Persona>> ref1;
+        std::vector<Persona> longevos1;
+        
 
         switch(opcion) {
             case 0: { // Crear nuevo conjunto de datos
@@ -388,6 +390,7 @@ int main() {
                 memoria_inicio = monitor.obtener_memoria();
                 monitor.iniciar_tiempo();
                 auto longevos=personasMasLongevasRef(*personas);
+                double tiempo_mostrar = monitor.detener_tiempo();
                 std::cout << "\nPersonas más longevas por ref:\n";
                 for (const auto& p : longevos) {
                     std::cout << "Nombre: " << p->getNombre() << " "
@@ -395,13 +398,26 @@ int main() {
                   << "Ciudad: " << p->getCiudadNacimiento() << " | "
                   << "Fecha de nacimiento: " << p->getFechaNacimiento() << "\n";
                 }
-                double tiempo_mostrar = monitor.detener_tiempo();
+                
                 long memoria_mostrar = monitor.obtener_memoria() - memoria_inicio;
-                monitor.registrar("Mostrar resumen", tiempo_mostrar, memoria_mostrar);
+                monitor.registrar("Personas mas longevas (Ref):", tiempo_mostrar, memoria_mostrar);
                 
                 
 
 
+                memoria_inicio = monitor.obtener_memoria();
+                monitor.iniciar_tiempo();
+                longevos1 = personasMasLongevasVal(*personas);
+                tiempo_mostrar = monitor.detener_tiempo();
+                std::cout << "\nPersonas más longevas(por valor):\n";
+                for (const auto& s : longevos1) {
+                    std::cout << "Nombre: " << s.getNombre() << " "
+                  << s.getApellido() << " | "
+                  << "Ciudad: " << s.getCiudadNacimiento() << " | "
+                  << "Fecha de nacimiento: " << s.getFechaNacimiento() << "\n";
+                }
+                memoria_mostrar = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Personas mas longevas (Valor): )", tiempo_mostrar, memoria_mostrar);
                 break;
             }
 
@@ -411,20 +427,38 @@ int main() {
                     std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
                     break;
                 }
-                memoria_inicio = monitor.obtener_memoria();
                 monitor.iniciar_tiempo();
-                auto longevos = personasMasLongevasVal(*personas);
-                double tiempo_mostrar = monitor.detener_tiempo();
-                std::cout << "\nPersonas más longevas por ciudad (by value):\n";
-                for (const auto& p : longevos) {
-                    std::cout << "Nombre: " << p.getNombre() << " "
-                  << p.getApellido() << " | "
-                  << "Ciudad: " << p.getCiudadNacimiento() << " | "
-                  << "Fecha de nacimiento: " << p.getFechaNacimiento() << "\n";
+                auto refRes = personasMasLongevasPorCiudadRef(*personas);
+                tiempo_ref = monitor.detener_tiempo();
+                memoria_ref = monitor.obtener_memoria() - memoria_inicio;
+
+                std::cout << "[REF] Personas más longevas por ciudad:\n";
+                for (auto& entry : refRes) {
+                    std::cout << "Ciudad: " << entry.first << "\n";
+                    for (const Persona* p : entry.second) {
+                        std::cout << "   - " << p->getNombre()
+                                  << " (" << p->getEdad() << " años)\n";
+                    }
                 }
-                long memoria_mostrar = monitor.obtener_memoria() - memoria_inicio;
-                monitor.registrar("Mostrar resumen", tiempo_mostrar, memoria_mostrar);
+                monitor.registrar("Personas longevas REF", tiempo_ref, memoria_ref);
+
+                monitor.iniciar_tiempo();
+                auto valRes = personasMasLongevasPorCiudadVal(*personas);
+                tiempo_val = monitor.detener_tiempo();
+                memoria_val = monitor.obtener_memoria() - memoria_inicio;
+
+                std::cout << "[VAL] Personas más longevas por ciudad:\n";
+                for (auto &entry : valRes) {
+                    std::cout << "Ciudad: " << entry.first << "\n";
+                    for (const Persona& p : entry.second) {
+                        std::cout << "   - " << p.getNombre()
+                                  << " (" << p.getEdad() << " años)\n";
+                    }
+                }
+                monitor.registrar("Personas longevas VAL", tiempo_val, memoria_val);
+
                 break;
+                
             }
             case 4: { // Mostrar Persona con mayor patrimonio en el pais
                 monitor.iniciar_tiempo();
@@ -673,7 +707,7 @@ int main() {
         }
         
         // Mostrar estadísticas de la operación (excepto para opciones 4,5,6)
-        if (opcion >= 0 && opcion <= 3) {
+        if (opcion >= 0 && opcion <= 14) {
             double tiempo = monitor.detener_tiempo();
             long memoria = monitor.obtener_memoria() - memoria_inicio;
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
