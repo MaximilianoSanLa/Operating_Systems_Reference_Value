@@ -48,6 +48,7 @@ public:
     double getPatrimonio() const { return patrimonio; }
     double getDeudas() const { return deudas; }
     bool getDeclaranteRenta() const { return declaranteRenta; }
+    char getGrupo() const { return grupo;}
 
     /**
      * Muestra toda la información de la persona de forma detallada.

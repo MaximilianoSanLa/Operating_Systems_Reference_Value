@@ -6,6 +6,7 @@
 #include "generador.h"
 #include "monitor.h"
 #include <map>
+#include <string>
 
 /**
  * Muestra el menú principal de la aplicación.
@@ -20,14 +21,188 @@ void mostrarMenu() {
     std::cout << "\n1. Mostrar resumen de todas las personas";
     std::cout << "\n2. Mostrar personas mas longevas";
     std::cout << "\n3. Mostrar personas mas longevas por ciudad";
-    std::cout << "\n4. Mostrar detalle completo por índice";
-    std::cout << "\n5. Buscar persona por ID";
-    std::cout << "\n6. Mostrar estadísticas de rendimiento";
-    std::cout << "\n7. Exportar estadísticas a CSV";
-    std::cout << "\n8. Salir";
+    std::cout << "\n4. Mostrar persona con mayor patrimonio";
+    std::cout << "\n5. Mostrar persona con mayor patrimonio en una ciudad";
+    std::cout << "\n6. Mostrar persona con mayor patrimonio en un grupo";
+    std::cout << "\n7. Lista y cuenta de personas por grupo";
+    std::cout << "\n8. Mostrar detalle completo por índice";
+    std::cout << "\n9. Buscar persona por ID";
+    std::cout << "\n10. Mostrar estadísticas de rendimiento";
+    std::cout << "\n11. Exportar estadísticas a CSV";
+    std::cout << "\n12. Ciudades con patrimonio promedio más alto";
+    std::cout << "\n13. Porcentaje de personas mayores a 60 anios";
+    std::cout << "\n14. Personas entre 18-25 en las ciudades";
+    std::cout << "\n15. Salir";
     std::cout << "\nSeleccione una opción: ";
 
 }
+
+std::map<std::string, double> ciudadesPatrimonioPromRef(const std::vector<Persona>& personas) {
+    std::map<std::string, double> suma;
+    std::map<std::string, int> conteo;
+
+    for (const auto& p : personas) {
+        suma[p.getCiudadNacimiento()] += p.getPatrimonio();
+        conteo[p.getCiudadNacimiento()]++;
+    }
+
+    std::map<std::string, double> promedio;
+    for (auto& [ciudad, total] : suma) {
+        promedio[ciudad] = total / conteo[ciudad];
+    }
+    return promedio;
+}
+
+std::map<std::string, double> ciudadesPatrimonioPromVal(std::vector<Persona> personas) {
+    return ciudadesPatrimonioPromRef(personas); // reuse logic
+}
+
+double porcentajeMayores60Ref(const std::vector<Persona>& personas) {
+    if (personas.empty()) return 0.0;
+    int mayores = 0;
+    for (const auto& p : personas) {
+        if (p.getEdad() > 60) mayores++;
+    }
+    return (100.0 * mayores) / personas.size();
+}
+
+double porcentajeMayores60Val(std::vector<Persona> personas) {
+    return porcentajeMayores60Ref(personas);
+}
+
+std::map<std::string, std::vector<Persona>> personas18a25Ref(const std::vector<Persona>& personas) {
+    std::map<std::string, std::vector<Persona>> resultado;
+    for (const auto& p : personas) {
+        if (p.getEdad() >= 18 && p.getEdad() <= 25) {
+            resultado[p.getCiudadNacimiento()].push_back(p);
+        }
+    }
+    return resultado;
+}
+
+std::map<std::string, std::vector<Persona>> personas18a25Val(std::vector<Persona> personas) {
+    return personas18a25Ref(personas);
+}
+
+void listarYContarPorGrupoVal(std::vector<Persona> personas) {
+    std::map<char, int> contador;
+
+    std::cout << "\n[Por valor] Listado de personas por grupo:\n";
+    for (const auto& p : personas) {
+        std::cout << "Nombre: " << p.getNombre() 
+                  << " " << p.getApellido()
+                  << " | Grupo: " << p.getGrupo() << "\n";
+        contador[p.getGrupo()]++;
+    }
+
+    std::cout << "\n[Por valor] Conteo por grupo:\n";
+    for (const auto& par : contador) {
+        std::cout << "Grupo " << par.first << ": " << par.second << " personas\n";
+    }
+}
+
+// --- Por referencia ---
+void listarYContarPorGrupoRef(const std::vector<Persona>& personas) {
+    std::map<char, int> contador;
+
+    std::cout << "\n[Por referencia] Listado de personas por grupo:\n";
+    for (const auto& p : personas) {
+        std::cout << "Nombre: " << p.getNombre() 
+                  << " " << p.getApellido()
+                  << " | Grupo: " << p.getGrupo() << "\n";
+        contador[p.getGrupo()]++;
+    }
+
+    std::cout << "\n[Por referencia] Conteo por grupo:\n";
+    for (const auto& par : contador) {
+        std::cout << "Grupo " << par.first << ": " << par.second << " personas\n";
+    }
+}
+
+
+const Persona& mayorPatrimonioPaisRef(const std::vector<Persona>& personas){
+    const Persona* max = &personas[0];
+    for (const auto& p : personas) {
+        if (p.getPatrimonio() > max->getPatrimonio()) {
+            max = &p;
+        }
+    }
+    return *max;
+}
+
+// Ciudad
+const Persona& mayorPatrimonioCiudadRef(const std::vector<Persona>& personas, const std::string& ciudad){
+    const Persona* max = nullptr;
+    for (const auto& p : personas) {
+        if (p.getCiudadNacimiento() == ciudad) {
+            if (!max || p.getPatrimonio() > max->getPatrimonio()) {
+                max = &p;
+            }
+        }
+    }
+    return *max;
+}
+
+
+// Grupo
+const Persona& mayorPatrimonioGrupoRef(const std::vector<Persona>& personas, char grupo){
+    const Persona* max = nullptr;
+    for (const auto& p : personas) {
+        if (p.getGrupo() == grupo) {
+            if (!max || p.getPatrimonio() > max->getPatrimonio()) {
+                max = &p;
+            }
+        }
+    }
+    return *max;
+}
+
+// ===============================
+// MÉTODOS POR VALOR
+// ===============================
+
+// País
+Persona mayorPatrimonioPaisVal(std::vector<Persona> personas){
+    Persona max = personas[0];
+    for (auto p : personas) {
+        if (p.getPatrimonio() > max.getPatrimonio()) {
+            max = p;
+        }
+    }
+    return max;
+}
+
+// Ciudad
+Persona mayorPatrimonioCiudadVal(std::vector<Persona> personas, std::string ciudad){
+    Persona max=personas[0];
+    bool found = false;
+    for (auto p : personas) {
+        if (p.getCiudadNacimiento() == ciudad) {
+            if (!found || p.getPatrimonio() > max.getPatrimonio()) {
+                max = p;
+                found = true;
+            }
+        }
+    }
+    return max;
+}
+
+// Grupo
+Persona mayorPatrimonioGrupoVal(std::vector<Persona> personas, char grupo){
+    Persona max=personas[0];
+    bool found = false;
+    for (auto p : personas) {
+        if (p.getGrupo() == grupo) {
+            if (!found || p.getPatrimonio() > max.getPatrimonio()) {
+                max = p;
+                found = true;
+            }
+        }
+    }
+    return max;
+}
+
+
 bool esMasViejoVal(std::string f1, std::string f2) {
     int d1, m1, a1;
     int d2, m2, a2;
@@ -164,7 +339,15 @@ int main() {
         std::string idBusqueda;
 
         long memoria_inicio = monitor.obtener_memoria();
-        
+        long memoria_val;
+        double tiempo_val;
+        std::map<std::string, double> val;
+        long memoria_ref;
+        double tiempo_ref;
+        std::map<std::string, double>  ref;
+        std::map<std::string, std::vector<Persona>> val1;
+        std::map<std::string, std::vector<Persona>> ref1;
+
         switch(opcion) {
             case 0: { // Crear nuevo conjunto de datos
                 int n;
@@ -197,7 +380,7 @@ int main() {
                 monitor.registrar("Crear datos", tiempo_gen, memoria_gen);
                 break;
             }
-            case 1:{
+            case 2:{//personas mas longevas
                 if (!personas || personas->empty()) {
                     std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
                     break;
@@ -223,7 +406,7 @@ int main() {
             }
 
 
-            case 2:{
+            case 3:{ //personas mas longevas por ciudad
                 if (!personas || personas->empty()) {
                     std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
                     break;
@@ -231,6 +414,7 @@ int main() {
                 memoria_inicio = monitor.obtener_memoria();
                 monitor.iniciar_tiempo();
                 auto longevos = personasMasLongevasVal(*personas);
+                double tiempo_mostrar = monitor.detener_tiempo();
                 std::cout << "\nPersonas más longevas por ciudad (by value):\n";
                 for (const auto& p : longevos) {
                     std::cout << "Nombre: " << p.getNombre() << " "
@@ -238,14 +422,95 @@ int main() {
                   << "Ciudad: " << p.getCiudadNacimiento() << " | "
                   << "Fecha de nacimiento: " << p.getFechaNacimiento() << "\n";
                 }
-                double tiempo_mostrar = monitor.detener_tiempo();
                 long memoria_mostrar = monitor.obtener_memoria() - memoria_inicio;
                 monitor.registrar("Mostrar resumen", tiempo_mostrar, memoria_mostrar);
                 break;
             }
+            case 4: { // Mostrar Persona con mayor patrimonio en el pais
+                monitor.iniciar_tiempo();
+                Persona maxRef = mayorPatrimonioPaisRef(*personas);
+                double tiempo_ref = monitor.detener_tiempo();
+                long memoria_ref = monitor.obtener_memoria() - memoria_inicio;
+                std::cout << "Mayor patrimonio en el país (REF): " << maxRef.getNombre()
+                << " " << maxRef.getApellido()
+                << " con patrimonio: " << maxRef.getPatrimonio() << "\n";
+                monitor.registrar("Mayor patrimonio país (Ref)", tiempo_ref, memoria_ref);
+
+                monitor.iniciar_tiempo();
+                Persona maxVal = mayorPatrimonioPaisVal(*personas);
+                double tiempo_val = monitor.detener_tiempo();
+                long memoria_val = monitor.obtener_memoria() - memoria_inicio;
+                std::cout << "Mayor patrimonio en el país (VAL): " << maxVal.getNombre()
+                << " " << maxVal.getApellido()
+                << " con patrimonio: " << maxVal.getPatrimonio() << "\n";
+                monitor.registrar("Mayor patrimonio país (Val)", tiempo_val, memoria_val);
+                break;
+            }
+        case 5: { // Mostrar Persona con mayor patrimonio en una ciudad
+            std::string ciudad;
+            std::cout << "Ingrese ciudad: ";
+            std::cin >> ciudad;
+
+            monitor.iniciar_tiempo();
+            Persona maxRef = mayorPatrimonioCiudadRef(*personas, ciudad);
+            double tiempo_ref = monitor.detener_tiempo();
+            long memoria_ref = monitor.obtener_memoria() - memoria_inicio;
+            std::cout << "Mayor patrimonio en " << ciudad << " (REF): " 
+              << maxRef.getNombre() << " " << maxRef.getApellido()
+              << " con patrimonio: " << maxRef.getPatrimonio() << "\n";
+            monitor.registrar("Mayor patrimonio ciudad (Ref)", tiempo_ref, memoria_ref);
+
+            monitor.iniciar_tiempo();
+            Persona maxVal = mayorPatrimonioCiudadVal(*personas, ciudad);
+            double tiempo_val = monitor.detener_tiempo();
+            long memoria_val = monitor.obtener_memoria() - memoria_inicio;
+            std::cout << "Mayor patrimonio en " << ciudad << " (VAL): " 
+              << maxVal.getNombre() << " " << maxVal.getApellido()
+              << " con patrimonio: " << maxVal.getPatrimonio() << "\n";
+            monitor.registrar("Mayor patrimonio ciudad (Val)", tiempo_val, memoria_val);
+        break;
+        }
+        case 6: { // Mostrar Persona con mayor patrimonio en un grupo
+            char grupo;
+            std::cout << "Ingrese grupo (A/B/C): ";
+            std::cin >> grupo;
+
+            monitor.iniciar_tiempo();
+            Persona maxRef = mayorPatrimonioGrupoRef(*personas, grupo);
+            double tiempo_ref = monitor.detener_tiempo();
+            long memoria_ref = monitor.obtener_memoria() - memoria_inicio;
+            std::cout << "Mayor patrimonio en grupo " << grupo << " (REF): " 
+              << maxRef.getNombre() << " " << maxRef.getApellido()
+              << " con patrimonio: " << maxRef.getPatrimonio() << "\n";
+            monitor.registrar("Mayor patrimonio grupo (Ref)", tiempo_ref, memoria_ref);
+
+            monitor.iniciar_tiempo();
+            Persona maxVal = mayorPatrimonioGrupoVal(*personas, grupo);
+            double tiempo_val = monitor.detener_tiempo();
+            long memoria_val = monitor.obtener_memoria() - memoria_inicio;
+            std::cout << "Mayor patrimonio en grupo " << grupo << " (VAL): " 
+              << maxVal.getNombre() << " " << maxVal.getApellido()
+              << " con patrimonio: " << maxVal.getPatrimonio() << "\n";
+            monitor.registrar("Mayor patrimonio grupo (Val)", tiempo_val, memoria_val);
+        break;
+    }
+        case 7: { // Lista y cuenta de personas por grupo
+            monitor.iniciar_tiempo();
+            listarYContarPorGrupoRef(*personas);
+            double tiempo_ref = monitor.detener_tiempo();
+            long memoria_ref = monitor.obtener_memoria() - memoria_inicio;
+            monitor.registrar("Listar y contar por grupo (Ref)", tiempo_ref, memoria_ref);
+
+            monitor.iniciar_tiempo();
+            listarYContarPorGrupoVal(*personas);
+            double tiempo_val = monitor.detener_tiempo();
+            long memoria_val = monitor.obtener_memoria() - memoria_inicio;
+            monitor.registrar("Listar y contar por grupo (Val)", tiempo_val, memoria_val);
+            break;
+        }
 
 
-            case 3: { // Mostrar resumen de todas las personas
+            case 1: { // Mostrar resumen de todas las personas
                 if (!personas || personas->empty()) {
                     std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
                     break;
@@ -265,7 +530,7 @@ int main() {
                 break;
             }
                 
-            case 4: { // Mostrar detalle por índice
+            case 8: { // Mostrar detalle por índice
                 if (!personas || personas->empty()) {
                     std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
                     break;
@@ -291,7 +556,7 @@ int main() {
                 break;
             }
                 
-            case 5: { // Buscar por ID
+            case 9: { // Buscar por ID
                 if (!personas || personas->empty()) {
                     std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
                     break;
@@ -312,15 +577,88 @@ int main() {
                 break;
             }
                 
-            case 6: // Mostrar estadísticas de rendimiento
+            case 10: // Mostrar estadísticas de rendimiento
                 monitor.mostrar_resumen();
                 break;
                 
-            case 7: // Exportar estadísticas a CSV
+            case 11: // Exportar estadísticas a CSV
                 monitor.exportar_csv();
                 break;
+            case 12: //Ciudades con patrimonio mas alto
+                monitor.iniciar_tiempo();
+                ref = ciudadesPatrimonioPromRef(*personas);
+                tiempo_ref = monitor.detener_tiempo();
+                memoria_ref = monitor.obtener_memoria() - memoria_inicio;
+                std::cout << "Patrimonio promedio por ciudad (REF):\n";
+                for (auto& [ciudad, prom] : ref) {
+                    std::cout << ciudad << ": " << prom << "\n";
+                }
+                monitor.registrar("Patrimonio promedio ciudades (Ref)", tiempo_ref, memoria_ref);
+            
+                monitor.iniciar_tiempo();
+                val = ciudadesPatrimonioPromVal(*personas);
+                tiempo_val = monitor.detener_tiempo();
+                memoria_val = monitor.obtener_memoria() - memoria_inicio;
+                std::cout << "Patrimonio promedio por ciudad (VAL):\n";
+                for (auto& [ciudad, prom] : val) {
+                    std::cout << ciudad << ": " << prom << "\n";
+                }
+                monitor.registrar("Patrimonio promedio ciudades (Val)", tiempo_val, memoria_val);
+                break;
+            case 13: //Porcentaje de personas mayores a 60 anios
+                monitor.iniciar_tiempo();
+
+                ref = ciudadesPatrimonioPromRef(*personas);
+                tiempo_ref = monitor.detener_tiempo();
+                memoria_ref = monitor.obtener_memoria() - memoria_inicio;
+                std::cout << "[REF] Ciudades con patrimonio promedio más alto:\n";
+                for (auto &p : ref) {
+                std::cout << "  " << p.first << ": " << p.second << "\n";
+                }
+                monitor.registrar("Patrimonio promedio REF", tiempo_ref, memoria_ref);
+
+                monitor.iniciar_tiempo();
+                val = ciudadesPatrimonioPromVal(*personas);
+                tiempo_val = monitor.detener_tiempo();
+                memoria_val = monitor.obtener_memoria() - memoria_inicio;
+                std::cout << "[VAL] Ciudades con patrimonio promedio más alto:\n";
+                for (auto &p : val) {
+                    std::cout << "  " << p.first << ": " << p.second << "\n";
+                }
+                monitor.registrar("Patrimonio promedio VAL", tiempo_val, memoria_val);
+                break;
+            case 14: //Personas entre 18-25 anios en las ciudades
+                monitor.iniciar_tiempo();
+                ref1 = personas18a25Ref(*personas);
+                tiempo_ref = monitor.detener_tiempo();
+                memoria_ref = monitor.obtener_memoria() - memoria_inicio;
+                std::cout << "[REF] Personas 18-25 por ciudad:\n";
+                for (auto &p : ref1) {
+                    std::cout << "  " << p.first << ": ";
+                    for (const auto& persona : p.second) {
+                         std::cout << persona.getNombre() << " "; // or getID()
+                    }
+                    std::cout << "\n";
+                }
+
+                monitor.registrar("Personas 18-25 REF", tiempo_ref, memoria_ref);
+
+                monitor.iniciar_tiempo();
                 
-            case 8: // Salir
+                val1 = personas18a25Val(*personas);
+                tiempo_val = monitor.detener_tiempo();
+                memoria_val = monitor.obtener_memoria() - memoria_inicio;
+                std::cout << "[VAL] Personas 18-25 por ciudad:\n";
+                for (auto &p : val1) {
+                    std::cout << "  " << p.first << ": ";
+                    for (const auto& persona : p.second) {
+                    std::cout << persona.getNombre() << " "; // or getID()
+                    }
+                std::cout << "\n";
+                }
+                monitor.registrar("Personas 18-25 VAL", tiempo_val, memoria_val);
+                break;
+            case 15: // Salir
                 std::cout << "Saliendo...\n";
                 break;
                 
@@ -335,7 +673,7 @@ int main() {
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
         }
         
-    } while(opcion != 8);
+    } while(opcion !=15);
     
     return 0;
 }
