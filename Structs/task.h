@@ -405,19 +405,19 @@ inline void listar_personas_valor(std::vector<Persona> personas){
     std::cout<<"\n\n=====================GRUPO A=====================\n\n";
 
     for(size_t i = 0; i < tam_A; ++i){
-        personas_A[i].mostrar();
+        personas_A[i].mostrarResumen();
     }
 
     std::cout<<"\n\n=====================GRUPO B=====================\n\n";
 
     for(size_t i = 0; i < tam_B; ++i){
-        personas_B[i].mostrar();
+        personas_B[i].mostrarResumen();
     }
 
     std::cout<<"\n\n=====================GRUPO C=====================\n\n";
 
     for(size_t i = 0; i < tam_C; ++i){
-        personas_C[i].mostrar();
+        personas_C[i].mostrarResumen();
     }
 
     std::cout<<"GRUPO A: " <<tam_A <<"\n";
@@ -455,19 +455,19 @@ inline void listar_personas_referencia(std::unique_ptr<std::vector<Persona>> &pe
     std::cout<<"\n\n=====================GRUPO A=====================\n\n";
 
     for(size_t i = 0; i < tam_A; ++i){
-        personas_A[i].mostrar();
+        personas_A[i].mostrarResumen();
     }
 
     std::cout<<"\n\n=====================GRUPO B=====================\n\n";
 
     for(size_t i = 0; i < tam_B; ++i){
-        personas_B[i].mostrar();
+        personas_B[i].mostrarResumen();
     }
 
     std::cout<<"\n\n=====================GRUPO C=====================\n\n";
 
     for(size_t i = 0; i < tam_C; ++i){
-        personas_C[i].mostrar();
+        personas_C[i].mostrarResumen();
     }
 
     std::cout<<"GRUPO A: " <<tam_A <<"\n";
@@ -475,7 +475,7 @@ inline void listar_personas_referencia(std::unique_ptr<std::vector<Persona>> &pe
     std::cout<<"GRUPO C: " <<tam_C <<"\n";
 }
 
-inline void obtener_promedio_personas(std::vector<Persona> personas){
+inline void obtener_promedio_ciudades(std::vector<Persona> personas){
     
     std::map<std::string, double> ciudades_patrimonio;
 
@@ -516,7 +516,7 @@ inline void obtener_promedio_personas(std::vector<Persona> personas){
 
 }
 
-inline void obtener_promedio_personas_referencia(std::unique_ptr<std::vector<Persona>> &personas){
+inline void obtener_promedio_ciudades_referencia(std::unique_ptr<std::vector<Persona>> &personas){
     
     std::map<std::string, double> ciudades_patrimonio;
 

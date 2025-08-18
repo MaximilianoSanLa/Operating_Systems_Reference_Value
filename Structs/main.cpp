@@ -368,10 +368,10 @@ int main() {
                     break;
                 }
 
-                int grupo;
+                //int grupo;
 
-                mostrarGrupos();
-                std::cin >> grupo;
+                //mostrarGrupos();
+                //std::cin >> grupo;
 
                 monitor.iniciar_tiempo();
                 memoria_inicio = monitor.obtener_memoria();
@@ -406,9 +406,9 @@ int main() {
 
 
                 if(aux == 1){
-                    obtener_promedio_personas(personas_valor);
+                    obtener_promedio_ciudades(personas_valor);
                 } else if(aux == 2){
-                    obtener_promedio_personas_referencia(personas);
+                    obtener_promedio_ciudades_referencia(personas);
                 }
                 else {
                     std::cout<< "Opción invalidad \n";
@@ -418,7 +418,7 @@ int main() {
 
                 double tiempo_grupo = monitor.detener_tiempo();
                 long memoria_grupo = monitor.obtener_memoria() - memoria_inicio;
-                monitor.registrar("Listar grupos", tiempo_grupo, memoria_grupo);
+                monitor.registrar("Promedio ciudades: ", tiempo_grupo, memoria_grupo);
 
                 monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo_grupo, memoria_grupo);
                 break;
@@ -452,7 +452,7 @@ int main() {
 
                 double tiempo_grupo = monitor.detener_tiempo();
                 long memoria_grupo = monitor.obtener_memoria() - memoria_inicio;
-                monitor.registrar("Listar grupos", tiempo_grupo, memoria_grupo);
+                monitor.registrar("Personas mayores: ", tiempo_grupo, memoria_grupo);
 
                 monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo_grupo, memoria_grupo);
                 break;
@@ -486,7 +486,7 @@ int main() {
 
                 double tiempo_grupo = monitor.detener_tiempo();
                 long memoria_grupo = monitor.obtener_memoria() - memoria_inicio;
-                monitor.registrar("Listar grupos", tiempo_grupo, memoria_grupo);
+                monitor.registrar("Personas menores", tiempo_grupo, memoria_grupo);
 
                 monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo_grupo, memoria_grupo);
                 break;
