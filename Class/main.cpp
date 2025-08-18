@@ -447,9 +447,15 @@ int main() {
                 break;
             }
         case 5: { // Mostrar Persona con mayor patrimonio en una ciudad
-            std::string ciudad;
-            std::cout << "Ingrese ciudad: ";
-            std::cin >> ciudad;
+            //std::string ciudad;
+            short ciudad_id;
+            std::cout << "Ingrese ID ciudad: ";
+            std::cin >> ciudad_id;
+            std::string ciudades[21]={"todos", "Bogotá","Medellín","Cali","Barranquilla","Cartagena","Bucaramanga","Pereira",
+                "Santa Marta","Cúcuta","Ibagué","Manizales","Pasto","Neiva","Villavicencio","Armenia","Sincelejo","Valledupar",
+                "Montería", "Popayán", "Tunja"
+            };
+            std::string ciudad = (ciudad_id < 22)?ciudades[ciudad_id]:"todos";
 
             monitor.iniciar_tiempo();
             Persona maxRef = mayorPatrimonioCiudadRef(*personas, ciudad);
