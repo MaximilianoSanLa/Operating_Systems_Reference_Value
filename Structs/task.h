@@ -12,13 +12,13 @@
 
 // Tutorial de sorting para map: https://www.geeksforgeeks.org/cpp/sorting-a-map-by-value-in-c-stl
 
-inline bool cmp(std::pair<std::string, double>& a, std::pair<std::string, double>& b){
+inline bool cmp(std::pair<std::string, long>& a, std::pair<std::string, long>& b){
     return a.second > b.second;
 }
 
-inline void organizar(std::map<std::string, double>& m){
+inline void organizar(std::map<std::string, long>& m){
 
-    std::vector<std::pair<std::string, double>> a;
+    std::vector<std::pair<std::string, long>> a;
 
     for (auto& it : m) {
         a.push_back(it);
@@ -477,13 +477,10 @@ inline void listar_personas_referencia(std::unique_ptr<std::vector<Persona>> &pe
 
 inline void obtener_promedio_ciudades(std::vector<Persona> personas){
     
-    std::map<std::string, double> ciudades_patrimonio;
+    std::map<std::string, long> ciudades_patrimonio;
+    std::map<std::string, long> ciudades_ciudadanos;
 
     size_t tam = personas.size();
-    double total_patrimonio = 0;
-    double total_ciudadanos = 0;
-
-    
 
     std::string ciudades[20]={"Bogotá","Medellín","Cali","Barranquilla","Cartagena","Bucaramanga","Pereira",
         "Santa Marta","Cúcuta","Ibagué","Manizales","Pasto","Neiva","Villavicencio","Armenia","Sincelejo","Valledupar",
@@ -491,26 +488,23 @@ inline void obtener_promedio_ciudades(std::vector<Persona> personas){
     };
 
     for (std::string ciudad : ciudades){
-        for(size_t i = 0; i < tam; ++i){
-            if (personas[i].ciudadNacimiento == ciudad){
-                personas[i].mostrar();
-                total_patrimonio += personas[i].patrimonio;
-                total_ciudadanos++;
-            }
+        ciudades_patrimonio[ciudad] = 0;
+    }
+
+    for(size_t i = 0; i < tam; ++i){
+        ciudades_patrimonio[personas[i].ciudadNacimiento] += personas[i].patrimonio;        
+        ciudades_ciudadanos[personas[i].ciudadNacimiento] += 1;     
+    }
+
+    for (std::string ciudad : ciudades){
+        if(ciudades_patrimonio[ciudad] == 0){
+            continue;
         }
 
-        if(total_ciudadanos == 0){
-            break;
-        }
-
-        total_patrimonio = total_patrimonio / total_ciudadanos;
-        
-        ciudades_patrimonio[ciudad] = total_patrimonio;
-        
-        total_patrimonio = 0;
-        total_ciudadanos = 0;
+        ciudades_patrimonio[ciudad] = ciudades_patrimonio[ciudad] / ciudades_ciudadanos[ciudad];
 
     }
+
 
     organizar(ciudades_patrimonio);
 
@@ -518,13 +512,10 @@ inline void obtener_promedio_ciudades(std::vector<Persona> personas){
 
 inline void obtener_promedio_ciudades_referencia(std::unique_ptr<std::vector<Persona>> &personas){
     
-    std::map<std::string, double> ciudades_patrimonio;
+    std::map<std::string, long> ciudades_patrimonio;
+    std::map<std::string, long> ciudades_ciudadanos;
 
     size_t tam = personas->size();
-    double total_patrimonio = 0;
-    double total_ciudadanos = 0;
-
-    
 
     std::string ciudades[20]={"Bogotá","Medellín","Cali","Barranquilla","Cartagena","Bucaramanga","Pereira",
         "Santa Marta","Cúcuta","Ibagué","Manizales","Pasto","Neiva","Villavicencio","Armenia","Sincelejo","Valledupar",
@@ -532,24 +523,20 @@ inline void obtener_promedio_ciudades_referencia(std::unique_ptr<std::vector<Per
     };
 
     for (std::string ciudad : ciudades){
-        for(size_t i = 0; i < tam; ++i){
-            if ((*personas)[i].ciudadNacimiento == ciudad){
-                (*personas)[i].mostrar();
-                total_patrimonio += (*personas)[i].patrimonio;
-                total_ciudadanos++;
-            }
+        ciudades_patrimonio[ciudad] = 0;
+    }
+
+    for(size_t i = 0; i < tam; ++i){
+        ciudades_patrimonio[(*personas)[i].ciudadNacimiento] += (*personas)[i].patrimonio;        
+        ciudades_ciudadanos[(*personas)[i].ciudadNacimiento] += 1;     
+    }
+
+    for (std::string ciudad : ciudades){
+        if(ciudades_patrimonio[ciudad] == 0){
+            continue;
         }
 
-        if(total_ciudadanos == 0){
-            break;
-        }
-
-        total_patrimonio = total_patrimonio / total_ciudadanos;
-        
-        ciudades_patrimonio[ciudad] = total_patrimonio;
-        
-        total_patrimonio = 0;
-        total_ciudadanos = 0;
+        ciudades_patrimonio[ciudad] = ciudades_patrimonio[ciudad] / ciudades_ciudadanos[ciudad];
 
     }
 
